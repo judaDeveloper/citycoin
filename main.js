@@ -120,6 +120,100 @@ function isNumberKey(evt, element) {
 }
 
 
+function resetScrollPos(parent){ document.querySelector(parent).scrollTop = 0; }
+
+function clearlocalStorage() { localStorage.clear();}
+
+function resized() {
+  var bodyWd = window.innerWidth;
+  document.getElementById("pageLength").innerHTML = bodyWd;
+}
+
+function resetclass(name) {
+  var i, x = document.getElementsByClassName(name);
+  for (i = 0; i < x.length; i++) {
+      x[i].classList.remove('shown');
+  }
+}
+function togglepage(name) {
+  let elem = document.querySelector('.' + name);
+  if (elem.classList.contains("shown")) {
+      elem.classList.remove('shown');
+  } else {
+      elem.classList.add('shown');
+  }
+}
+
+function toggleByparent(parnt, chld) {
+  var p = document.querySelector(parnt);
+  var c = p.querySelector(chld);
+  if (c.classList.contains("shown")) {
+      c.classList.remove('shown');
+  } else {
+      p.classList.add('shown');
+      c.classList.add('shown');
+  }
+}
+
+const openCloseLists = (name) => {
+  resetclass('dash');
+  resetclass("dl");
+  let list = document.querySelector('.' + name);
+  let parentlist = document.querySelector('.listingboard');
+  let previous = document.querySelector('.dashboard');
+  if (name == 'exit') {
+      previous.classList.add('shown');
+  } else {
+      parentlist.classList.add('shown');
+      list.classList.add('shown');
+  }
+  document.getElementById('listname').innerHTML = name.toString();
+};
+
+const openCloseforms = (name, acton) => {
+  let parent = document.querySelector('.entryforms');
+  var x = document.getElementsByClassName('entry');
+  for (i = 0; i < x.length; i++) {
+      x[i].classList.remove('new', 'edit');
+  }
+  let myfom = document.querySelector('.' + name);
+  if (acton == 'exit') {
+      parent.classList.remove('shown');
+  } else {
+    myfom.classList.add(acton.toString());
+    formreset('newclient');
+    parent.classList.add('shown');
+    resetScrollPos('.cfm_container');
+  }
+
+};
+
+
+const formreset = (formid) => {
+	document.getElementById(formid).reset();
+	document.querySelector('#photoicon').value ='';
+};
+
+document.getElementById('db_btnmenu').addEventListener('click', () => { toggleByparent('.boardthree', '.menubox'); });
+
+document.getElementById('clientsList').addEventListener('click', (e) => {
+    let row = e.target.closest("li"); 
+    let data = JSON.parse(row.dataset.clientdata);
+
+    localStorage.setItem('currentClient', JSON.stringify(data));
+    currentClient = JSON.parse(localStorage.getItem('currentClient'));
+    togglepage("profileboard");
+    getselectedUserdata();
+  }
+);
+
+
+
+
+
+
+
+
 //  -------  NEW CLIENT
 
 function newUserdata() { 
@@ -243,96 +337,6 @@ const deleteUnusedId = () => {
 		alert("Error getting document:", error);
 	});
 };
-
-
-
-
-
-
-
-
-
-function resetScrollPos(parent){ document.querySelector(parent).scrollTop = 0; }
-
-function clearlocalStorage() { localStorage.clear();}
-
-function resized() {
-  var bodyWd = window.innerWidth;
-  document.getElementById("pageLength").innerHTML = bodyWd;
-}
-
-function resetclass(name) {
-  var i, x = document.getElementsByClassName(name);
-  for (i = 0; i < x.length; i++) {
-      x[i].classList.remove('shown');
-  }
-}
-function togglepage(name) {
-  let elem = document.querySelector('.' + name);
-  if (elem.classList.contains("shown")) {
-      elem.classList.remove('shown');
-  } else {
-      elem.classList.add('shown');
-  }
-}
-
-function toggleByparent(parnt, chld) {
-  var p = document.querySelector(parnt);
-  var c = p.querySelector(chld);
-  if (c.classList.contains("shown")) {
-      c.classList.remove('shown');
-  } else {
-      p.classList.add('shown');
-      c.classList.add('shown');
-  }
-}
-
-const openCloseLists = (name) => {
-  resetclass('dash');
-  resetclass("dl");
-  let list = document.querySelector('.' + name);
-  let parentlist = document.querySelector('.listingboard');
-  let previous = document.querySelector('.dashboard');
-  if (name == 'exit') {
-      previous.classList.add('shown');
-  } else {
-      parentlist.classList.add('shown');
-      list.classList.add('shown');
-  }
-  document.getElementById('listname').innerHTML = name.toString();
-};
-
-const openCloseforms = (name, acton) => {
-  let parent = document.querySelector('.entryforms');
-  var x = document.getElementsByClassName('entry');
-  for (i = 0; i < x.length; i++) {
-      x[i].classList.remove('new', 'edit');
-  }
-  let myfom = document.querySelector('.' + name);
-  if (acton == 'exit') {
-      parent.classList.remove('shown');
-  } else {
-    myfom.classList.add(acton.toString());
-    formreset('newclient');
-    parent.classList.add('shown');
-    resetScrollPos('.cfm_container');
-  }
-
-};
-
-document.getElementById('db_btnmenu').addEventListener('click', () => { toggleByparent('.boardthree', '.menubox'); });
-
-document.getElementById('clientsList').addEventListener('click', (e) => {
-    let row = e.target.closest("li"); 
-    let data = JSON.parse(row.dataset.clientdata);
-
-    localStorage.setItem('currentClient', JSON.stringify(data));
-    currentClient = JSON.parse(localStorage.getItem('currentClient'));
-    togglepage("profileboard");
-    getselectedUserdata();
-  }
-);
-
 
 
 
