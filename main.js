@@ -1,3 +1,357 @@
+const firebaseConfig = {
+    apiKey: "AIzaSyDZOkXdDSaw1xwonO7L8GcdSfQUtbSMM4c",
+    authDomain: "cars-digital-3c158.firebaseapp.com",
+    databaseURL: "https://cars-digital-3c158-default-rtdb.firebaseio.com",
+    projectId: "cars-digital-3c158",
+    storageBucket: "cars-digital-3c158.appspot.com",
+    messagingSenderId: "606775878283",
+    appId: "1:606775878283:web:07d3d79d7b186be576aa8e"
+};
+
+firebase.initializeApp(firebaseConfig);
+const db = firebase.firestore();
+
+
+var newCid, documentIndex;
+
+window.addEventListener('load', function() {
+	/*togglepage("mainpage");  //toggleCurrentPage("mainpage"); */ });
+
+const myobserver = new MutationObserver(entries => {
+	applyListData();
+});
+const myElement = document.getElementById('guaranta');
+myobserver.observe(myElement, {
+	attributes: true,
+});
+getGarantalist();
+
+function getRandomNumber(min, max) {
+	var minn = Math.ceil(min);
+	var maxx = Math.floor(max);
+	return (Math.floor(Math.random() * (maxx - minn)) + minn);
+}
+
+function toggleParentPages(name) {
+	var i, x, p;
+	n = document.getElementsByClassName(name);
+	for (i = 0; i < n.length; i++) {
+		x = n[i];
+		p = x.parentElement;
+		if (x.classList.contains(n)) {
+			x.classList.add('shown');
+			p.classList.add('shown');
+		} else {
+			x.classList.remove('shown');
+			p.classList.add('shown');
+		}
+	}
+}
+
+function showhideElements(name) {
+	let x = document.querySelectorAll('.optionlist');
+	for (i = 0; i < x.length; i++) {
+		if (x[i].classList.contains(name) && !x[i].classList.contains('shown')) {
+			x[i].classList.add('shown');
+		} else {
+			x[i].classList.remove('shown');
+		}
+	}
+}
+
+function radioclicked(radio, inptid) {
+	let value = null;
+	let x = document.getElementsByName(radio);
+	let input = document.getElementById(inptid);
+	for (var i = 0; i < x.length; i++) {
+		if (x[i].type == 'radio' && x[i].checked == true) {
+			value = x[i].value;
+		}
+	}
+	input.value = value;
+	radioValueChanged(radio, inptid);
+}
+
+function radioValueChanged(radio, inputid) {
+	let radios = document.getElementsByName(radio);
+	let nput = document.getElementById(inputid);
+	let inputtext = document.querySelector('.' + radio);
+	let parntText = '';
+
+	let plans = document.querySelector('.instalplans');
+	for (var i = 0; i < radios.length; i++) {
+		if (nput.value > 0 && radios[i].value == nput.value) {
+			radios[i].checked = true;
+			parntText = radios[i].parentElement.innerText;
+		} else {
+			radios[i].checked = false;
+		}
+
+		if (nput.value == 2 && radio == 'payplan') {
+			plans.classList.add('shown');
+		} else if (nput.value == 1 && radio == 'payplan') {
+			plans.classList.remove('shown');
+			document.getElementById('inputinstplans').value = '';
+		} else {
+			plans.classList.remove('shown');
+		}
+	}
+	inputtext.value = parntText;
+}
+
+function isNumberKey(evt, element) {
+	var charCode = (evt.which) ? evt.which : event.keyCode;
+	if (charCode > 31 && (charCode < 48 || charCode > 57) && !(charCode == 46 || charCode == 8))
+		return false;
+	else {
+		var len = $(element).val().length;
+		var index = $(element).val().indexOf('.');
+		if (index > 0 && charCode == 46) {
+			return false;
+		}
+		if (index > 0) {
+			var CharAfterdot = (len + 1) - index;
+			if (CharAfterdot > 3) {
+				return false;
+			}
+		}
+	}
+	return true;
+}
+
+
+//  -------  NEW CLIENT
+
+function newUserdata() { 
+	const newdata = {
+		cid: 			newCid,
+		firstname: 		document.getElementById("fisrtname").value,
+		secondname: 	document.getElementById("secondname").value,
+		lastname: 		document.getElementById("lastname").value,
+		email: 			document.getElementById("emailaddress").value,
+		birthdate: 		document.getElementById("birthdate").value,
+		gender: 		document.getElementById("inputgenda").value,
+		marital: 		document.getElementById("inputmarital").value,
+		idnumber: 		document.getElementById("idnumber").value,
+		currenttown:	document.getElementById("Currenttown").value,
+		sublocation:	document.getElementById("sublocation").value,
+		homeaddress:	document.getElementById("currentaddress").value,
+		phonenumber:	document.getElementById("phonenumber").value,
+		othernumber:	[],
+		imagelink: 		document.getElementById("input_downloadURL").value,
+		date: 			new Date().toLocaleDateString()
+	};
+	localStorage.setItem('newuserdata', JSON.stringify(newdata));
+}
+
+const resizeImage = () => {
+	let resize_width = 300;
+	let item = document.querySelector('#inputfilephoto').files[0];
+	let preview = document.querySelector('#photoicon');
+	let reader = new FileReader();
+	reader.readAsDataURL(item);
+	reader.name = item.name;
+	reader.size = item.size;
+	reader.onload = function(event) {
+		let img = new Image();
+		img.src = event.target.result;
+		img.name = event.target.name;
+		img.size = event.target.size;
+		img.onload = function(el) {
+			let elem = document.createElement('canvas');
+			let scaleFactor = resize_width / el.target.width;
+			elem.width = resize_width;
+			elem.height = el.target.height * scaleFactor;
+			let ctx = elem.getContext('2d');
+			ctx.drawImage(el.target, 0, 0, elem.width, elem.height);
+			let srcEncoded = ctx.canvas.toDataURL('image/png', 1);
+			preview.src = srcEncoded;
+			uploadimage(srcEncoded);	
+		};
+	};
+};
+
+const uploadimage = (srcEncoded) => {
+	let urlinput = document.querySelector("#input_downloadURL");
+	let ref = firebase.storage().ref("/UserImages");
+	let name = +new Date()+ "00000";
+	ref.child(name).putString(srcEncoded, 'data_url').then((snapshot) => snapshot.ref.getDownloadURL()).then(myurl => {
+		if (myurl !== '') {
+			urlinput.value = myurl;
+			urlinput.classList.add('uploaded');
+			newUserdata();
+		}
+	});
+};
+
+const saveNewuser = () => {
+	let data = JSON.parse(localStorage.getItem("newuserdata"));
+	 db.collection("citycoinCloudusers").add(data)
+	.then((docRef) => {
+		downloadUsers();
+		alert("Document "+ docRef.id +" successfully written!");
+		openCloseforms('clientform', 'exit');
+		localStorage.removeItem('newuserdata');
+	})
+	.catch((error) => {
+		alert("Error adding document: ", error);
+	});
+};
+
+const getnewUserid = () => {
+	let array = [];
+	let rnum = getRandomNumber(1000001, 9999999);
+	let ref = db.collection('citycoinCloudusers');
+
+	ref.get().then(snap => {
+		snap.forEach(doc => {
+			array.push(doc.data().cid);
+		});
+		if (array.length > 0) {
+			if (rnum.toString().length == 7 && array.includes(rnum) == false) {
+				newCid = Number(rnum);
+				newUserdata();
+				saveNewuser();
+
+			} else {
+				getnewUserid();
+			}
+		} else {
+			newCid = 1000001;
+			newUserdata();
+			saveNewuser();
+		}
+	});
+};
+
+const deleteUnusedId = () => {
+	const docref = db.collection('Citycoin_clients').doc(documentId.toString());
+	docref.get().then((doc) => {
+		if (doc.exists) {
+			if (doc.data().state == 'new') {
+				docref.delete().then(() => {
+					alert("Document successfully deleted!");
+
+				}).catch((error) => {
+					alert("Error removing document: ", error);
+				});
+			}
+		} else {
+			alert("No such document!");
+		}
+	}).catch((error) => {
+		alert("Error getting document:", error);
+	});
+};
+
+
+
+
+
+
+
+
+
+function resetScrollPos(parent){ document.querySelector(parent).scrollTop = 0; }
+
+function clearlocalStorage() { localStorage.clear();}
+
+function resized() {
+  var bodyWd = window.innerWidth;
+  document.getElementById("pageLength").innerHTML = bodyWd;
+}
+
+function resetclass(name) {
+  var i, x = document.getElementsByClassName(name);
+  for (i = 0; i < x.length; i++) {
+      x[i].classList.remove('shown');
+  }
+}
+function togglepage(name) {
+  let elem = document.querySelector('.' + name);
+  if (elem.classList.contains("shown")) {
+      elem.classList.remove('shown');
+  } else {
+      elem.classList.add('shown');
+  }
+}
+
+function toggleByparent(parnt, chld) {
+  var p = document.querySelector(parnt);
+  var c = p.querySelector(chld);
+  if (c.classList.contains("shown")) {
+      c.classList.remove('shown');
+  } else {
+      p.classList.add('shown');
+      c.classList.add('shown');
+  }
+}
+
+const openCloseLists = (name) => {
+  resetclass('dash');
+  resetclass("dl");
+  let list = document.querySelector('.' + name);
+  let parentlist = document.querySelector('.listingboard');
+  let previous = document.querySelector('.dashboard');
+  if (name == 'exit') {
+      previous.classList.add('shown');
+  } else {
+      parentlist.classList.add('shown');
+      list.classList.add('shown');
+  }
+  document.getElementById('listname').innerHTML = name.toString();
+};
+
+const openCloseforms = (name, acton) => {
+  let parent = document.querySelector('.entryforms');
+  var x = document.getElementsByClassName('entry');
+  for (i = 0; i < x.length; i++) {
+      x[i].classList.remove('new', 'edit');
+  }
+  let myfom = document.querySelector('.' + name);
+  if (acton == 'exit') {
+      parent.classList.remove('shown');
+  } else {
+    myfom.classList.add(acton.toString());
+    formreset('newclient');
+    parent.classList.add('shown');
+    resetScrollPos('.cfm_container');
+  }
+
+};
+
+document.getElementById('db_btnmenu').addEventListener('click', () => { toggleByparent('.boardthree', '.menubox'); });
+
+document.getElementById('clientsList').addEventListener('click', (e) => {
+    let row = e.target.closest("li"); 
+    let data = JSON.parse(row.dataset.clientdata);
+
+    localStorage.setItem('currentClient', JSON.stringify(data));
+    currentClient = JSON.parse(localStorage.getItem('currentClient'));
+    togglepage("profileboard");
+    getselectedUserdata();
+  }
+);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/*
+
 //  load home page
 //window.addEventListener('load', function() {
 //  document.getElementById("homepage").style.display="flex";
