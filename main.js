@@ -119,99 +119,158 @@ function isNumberKey(evt, element) {
 	return true;
 }
 
-
-function resetScrollPos(parent){ document.querySelector(parent).scrollTop = 0; }
-
-function clearlocalStorage() { localStorage.clear();}
-
-function resized() {
-  var bodyWd = window.innerWidth;
-  document.getElementById("pageLength").innerHTML = bodyWd;
+function inputCurrency() {
+	var myinput = document.getElementById("inputamount");
+	var number = parseFloat((myinput.value).replace(/[^0-9\.-]+/g, ""));
+	document.getElementById("inputamnt").value = number;
 }
 
-function resetclass(name) {
-  var i, x = document.getElementsByClassName(name);
-  for (i = 0; i < x.length; i++) {
-      x[i].classList.remove('shown');
-  }
-}
-function togglepage(name) {
-  let elem = document.querySelector('.' + name);
-  if (elem.classList.contains("shown")) {
-      elem.classList.remove('shown');
-  } else {
-      elem.classList.add('shown');
-  }
-}
+//ondrop="return false;" onpaste="return false;" oncontextmenu="return false;" 
 
-function toggleByparent(parnt, chld) {
-  var p = document.querySelector(parnt);
-  var c = p.querySelector(chld);
-  if (c.classList.contains("shown")) {
-      c.classList.remove('shown');
-  } else {
-      p.classList.add('shown');
-      c.classList.add('shown');
-  }
-}
+function setLocalDataToCloud() {
+	var datas = Object.values(Loans);
+	var key = '';
+	var obj;
+	for (var i = 0; i < datas.length; i++) {
+		key = datas[i].lid.toString();
+		obj = datas[i];
 
-const openCloseLists = (name) => {
-  resetclass('dash');
-  resetclass("dl");
-  let list = document.querySelector('.' + name);
-  let parentlist = document.querySelector('.listingboard');
-  let previous = document.querySelector('.dashboard');
-  if (name == 'exit') {
-      previous.classList.add('shown');
-  } else {
-      parentlist.classList.add('shown');
-      list.classList.add('shown');
-  }
-  document.getElementById('listname').innerHTML = name.toString();
+		db.collection("loans").doc(key).set(obj);
+	}
+}
+const createnewuserid = () => {
+	let indexes = [];
+	let rdm = getRandomNumber(1000001, 9999999);
+	db.collection('citycoinCloudloans').get().then(snap => {
+		snap.forEach(doc => {
+			indexes.push(doc.data().lid);
+		});
+		if (indexes.length > 0) {
+			if (rdm.toString().length == 7 && indexes.includes(rdm) == false) {
+				createUpdateLoan(rdm);
+			} else {
+				createnewuserid();
+			}
+		} else {
+			createUpdateLoan(1000001);
+		}
+	});
 };
 
-const openCloseforms = (name, acton) => {
-  let parent = document.querySelector('.entryforms');
-  var x = document.getElementsByClassName('entry');
-  for (i = 0; i < x.length; i++) {
-      x[i].classList.remove('new', 'edit');
-  }
-  let myfom = document.querySelector('.' + name);
-  if (acton == 'exit') {
-      parent.classList.remove('shown');
-  } else {
-    myfom.classList.add(acton.toString());
-    formreset('newclient');
-    parent.classList.add('shown');
-    resetScrollPos('.cfm_container');
-  }
+function createUpdateLoan(newuserid) {
+	let max;
+	let data = currentClient;
 
+	function addzero(i) {
+		if (i < 10) {
+			i = "0" + i;
+		}
+		return i;
+	}
+	const d = new Date();
+	let h = addzero(d.getHours());
+	let m = addzero(d.getMinutes());
+	let s = addzero(d.getSeconds());
+	let time = h + ":" + m + ":" + s;
+
+	let amont = document.getElementById("inputamnt").value;
+	let weeks = document.getElementById("inputweeks").value;
+	let reason = document.getElementById("inputobjectives").value;
+	let payplan = document.getElementById("inputpayplan").value;
+	let instplan = document.getElementById("inputinstplans").value;
+	let garantaid = document.getElementById("inputgrantaid").value;
+	//let userid = document.getElementById("inputcurrentuser").value;
+
+	var newloan = {
+		no: 2,
+		lid: newuserid,
+		cid: data.id,
+		period: weeks,
+		duedate: '',
+		amount: parseFloat(amont),
+		//intrst:   0,
+		//total:    0,
+		//bal:      0,
+		reason: reason,
+		pyplan: payplan,
+		intplan: instplan,
+		gid: garantaid,
+		date: d.toLocaleDateString(),
+		time: time,
+		sec: s,
+		min: m,
+		hour: h,
+		day: d.getDate(),
+		month: d.getMonth() + 1,
+		year: d.getFullYear(),
+		sid: ''
+	};
+	db.collection("citycoinCloudloans").doc(newuserid.toString())
+		.set(newloan).then(() => {
+			alert('new loan saved successfully');
+			openCloseforms('loanform', 'exit');
+			fetched_loans();
+		})
+		.catch((error) => {
+			console.error("Error writing document: ", error);
+		});
+}
+
+document.getElementById('inputamount').onblur = function(event) {
+	let USDollar = new Intl.NumberFormat('en-US', {
+		style: 'currency',
+		currency: 'Ksh',
+	});
+	var newinput = document.getElementById("inputamnt").value;
+	var myinput = document.getElementById("inputamount");
+	var currency = parseFloat(newinput.replace(/[^0-9\.-]+/g, ""));
+	myinput.value = `${USDollar.format(currency)}`;
 };
 
+document.querySelector(".loanform").addEventListener("click", function(e) {
+	e = window.event || e;
+	if (e.target.id == 'inputobjectives2') {
+		showhideElements('objectives');
+	} else if (e.target.id == 'inputgrantaname') {
+		showhideElements('garantas');
+	} else if (e.target.id == 'inputperiod') {
+		showhideElements('periods');
+	} else {
+		showhideElements('');
+	}
+});
 
 const formreset = (formid) => {
 	document.getElementById(formid).reset();
 	document.querySelector('#photoicon').value ='';
 };
 
-document.getElementById('db_btnmenu').addEventListener('click', () => { toggleByparent('.boardthree', '.menubox'); });
+function getGarantalist() {
+	let list = document.getElementById('guaranta');
+	list.dataset.clientList = JSON.stringify(arrayusers);
+}
 
-document.getElementById('clientsList').addEventListener('click', (e) => {
-    let row = e.target.closest("li"); 
-    let data = JSON.parse(row.dataset.clientdata);
+function applyListData() {
+	let list = document.getElementById('guaranta');
+	let data = JSON.parse(list.dataset.clientList);
 
-    localStorage.setItem('currentClient', JSON.stringify(data));
-    currentClient = JSON.parse(localStorage.getItem('currentClient'));
-    togglepage("profileboard");
-    getselectedUserdata();
-  }
-);
+	let x = data.length;
+	for (let i = 0; i < x; ++i) {
+		let li = document.createElement('label');
+		li.className = 'radio';
+		let rdo = document.createElement('input');
+		rdo.name = 'garanta';
+		rdo.type = 'radio'; //rdo.value = i.toString();   
+		let spn = document.createElement('span');
+		spn.className = 'checkmark';
+		rdo.value = String(data[i].id);
 
-
-
-
-
-
+		li.innerText = data[i].firstname + ' ' + data[i].lastname;
+		li.appendChild(rdo);
+		li.appendChild(spn);
+		list.appendChild(li);
+	}
+}
 
 
 //  -------  NEW CLIENT
@@ -337,8 +396,6 @@ const deleteUnusedId = () => {
 		alert("Error getting document:", error);
 	});
 };
-
-
 
 
 
