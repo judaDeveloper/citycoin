@@ -18,9 +18,76 @@
 
     <title>city coin</title>
 </head>
-<script src="https://unpkg.com/localbase/dist/localbase.dev.js"></script>
+<body >
+    <div class="main">
+        <div class="pages">
+            <div class=" page  entryforms shown">
+                <div class="entry clientform new">
 
-<body onresize="resized()">
+                    <div class="cfm_header">  <div class="logo"> <span>City</span> <span>Coin</span></div>
+                        <p>New client</p> <button class="material-icons" id="bntcloseForm" onclick="openCloseforms('clientform', 'exit')">close</button> 
+                    </div>
+
+                    <form action=""  class="cfm_container" id="newclient"> 
+                        <div class="cfm_panel"> 
+                            <div class="cfm_topper"> <h2>What is required *</h2> <p>Clear photo of National ID (both sides)</p> <p>Clear passphoto Photo</p> <p>Kenyan KRA PIN number</p> <div> Account id : <input type="text" id="newAccountid"></div>                       
+                        </div> 
+                        <div class="cfm_form">
+                            <div class="cfm_image">
+                                <label class="passphoto" for="inputfilephoto">
+                                    <div> <input type="file" id="inputfilephoto" accept=".png, .jpg, .jpeg" required oninput="this.className = ''" onchange="resizeImage()" /> <input type="text" id="input_downloadURL" oninput="this.className = ''" /> </div>
+                                    <img src="" alt="" id="photoicon"/>  <p class="passEmpty"><i class="material-icons icon">person</i> click to upload </p> <p class="passValid">click to change <i class="material-icons icon">check_circle</i></p> 
+                                </label> 
+                            </div> 
+                            <div class="cfm_names">
+                                <label class="cfm_label"> <i class="material-icons">person</i> <input type="text" id="fisrtname" placeholder="" oninput="this.className = ''" onkeyup="newUserdata()" > <span class="placeholda">First Name</span><span class="focusline"></span> <i class="material-icons">check_circle</i> </label>
+                                <label class="cfm_label"> <i class="material-icons">person</i>  <input type="text" id="secondname" placeholder="" oninput="this.className = ''"  onkeyup="newUserdata()"> <span class="placeholda">Second Name</span><span class="focusline"></span> <i class="material-icons">check_circle</i> </label>
+                                <label class="cfm_label"> <i class="material-icons">person</i>  <input type="text" id="lastname" placeholder="" oninput="this.className = ''"  onkeyup="newUserdata()"> <span class="placeholda">Last Name</span><span class="focusline"></span> <i class="material-icons">check_circle</i> </label>    
+                                <label class="cfm_label"> <i class="material-icons">calendar</i>  <input type="date" id="birthdate" placeholder="" oninput="this.className = ''"  onchange="newUserdata()"> <span class="placeholda">Date of birth</span><span class="focusline"></span> <!-- <i class="material-icons">check_circle</i>--> </label>
+                            </div>
+                            
+                            <div class="cfm_label gender">
+                                <label class="nptname">Gender <input type="text" id="inputgenda" value="" oninput="radioValueChanged()"  onchange="newUserdata()" /> </label>
+                                <label class="radio"><input type="radio" name="genda" value="1" onclick="radioclicked('genda','inputgenda')" /><span class="checkmark"></span><span>Male</span></label>
+                                <label class="radio"><input type="radio" name="genda" value="2" onclick="radioclicked('genda','inputgenda')" /><span class="checkmark"></span><span>Female</span></label>
+                                <i class="material-icons">check_circle</i>
+                            </div>
+                            <div class="cfm_label marital">
+                                <label class="nptname">Marital <input type="text" id="inputmarital" value="" oninput="radioValueChanged()" onchange="newUserdata()" /> </label>
+                                <div>
+                                    <label class="radio"><input type="radio" name="marital" value="1" onclick="radioclicked('marital','inputmarital')" /><span class="checkmark"></span><span>Single</span></label>
+                                    <label class="radio"><input type="radio" name="marital" value="2" onclick="radioclicked('marital','inputmarital')" /><span class="checkmark"></span><span>Married</span></label>
+                                    <label class="radio"><input type="radio" name="marital" value="3" onclick="radioclicked('marital','inputmarital')" /><span class="checkmark"></span><span>Widowed</span></label>
+                                    <i class="material-icons">check_circle</i>
+                                </div>
+                            </div>
+                            <label class="cfm_label"> <i class="material-icons">email</i>  <input type="text" id="emailaddress" placeholder="" oninput="this.className = ''"  onkeyup="newUserdata()"> <span class="placeholda">Email Address</span><span class="focusline"></span> <i class="material-icons">check_circle</i> </label>
+                            <label class="cfm_label "> <i class="material-icons">phone_android</i>  <input type="text" id="phonenumber" placeholder="" oninput="this.className = ''"  onkeyup="newUserdata()"> <span class="placeholda">Phone Number</span><span class="focusline"></span> <i class="material-icons">check_circle</i> </label>
+                            <label class="cfm_label"> <i class="material-icons">contact_mail</i>  <input type="text" id="idnumber" placeholder="" oninput="this.className = ''"  onkeyup="newUserdata()"> <span class="placeholda">ID Number</span><span class="focusline"></span> <i class="material-icons">check_circle</i> </label>
+                            <label class="cfm_label"> <i class="material-icons">person_pin_circle</i>  <input type="text" id="currentaddress" placeholder="" oninput="this.className = ''"  onkeyup="newUserdata()"> <span class="placeholda">Current address</span><span class="focusline"></span> <i class="material-icons">check_circle</i> </label>
+                            <label class="cfm_label"> <i class="material-icons">location_city</i>  <input type="text" id="sublocation" placeholder="" oninput="this.className = ''"  onkeyup="newUserdata()"> <span class="placeholda">Sublocation</span><span class="focusline"></span> <i class="material-icons">check_circle</i> </label>
+                            <label class="cfm_label"> <i class="material-icons">domain</i> <input type="text" id="Currenttown" placeholder="" oninput="this.className = ''" onkeyup="newUserdata()" > <span class="placeholda">Current town</span><span class="focusline"></span> <i class="material-icons">check_circle</i> </label>
+                        </div>
+                        <div class="clearpaneel">
+                            <button type="button" id="btncleardetails" onclick="formreset('newclient')">Clear</button>
+                        </div>
+                        <div class="cfm_footer">
+                            <button type="button" id="btnsaveclient" onclick="getnewUserid()">Submit</button>
+                        </div>                        
+                    </form>
+                </div>
+            </div>            
+        </div>   
+    </div>
+        <script src="https://judadeveloper.github.io/citycoin/main.js"></script>
+</body>
+
+
+
+    
+
+<!--OLD CODE-->   
+<!-- <body onresize="resized()">
     <div class="mainpage">
         <div class="allpages">
             <div class="page signinpage">
@@ -271,7 +338,7 @@
                                     <label for="" class="inpt"><input type="text" placeholder="" oninput="this.className = ''" id="empTown"> <span class="placeholder">City/Town</span><span class="btmline"></span> </label>
                                     <label for="" class="inpt"><input type="text" placeholder="" oninput="this.className = ''" id="empLocation"> <span class="placeholder">Physical location</span><span class="btmline"></span> </label>
                                     <label for="" class="inpt"><input type="text" placeholder="" oninput="this.className = ''" id="empContact"> <span class="placeholder">Employer contact</span><span class="btmline"></span> </label>
-                                </div>-->
+                                </div>
                             </div>
         
                             <div class="tab">
@@ -300,7 +367,7 @@
                                             <div class="uploadInput"><input type="file" id="oppositepicture" accept=".png, .jpg, .jpeg" oninput="this.className = ''" multiple /></div>
                                             <div class="uploadText">opposite view</div>
                                         </label>
-                                    </div>-->
+                                    </div>
                                 </div>
                             </div>
             
@@ -427,5 +494,6 @@
         </div>      
     </div>
     <script src="https://judadeveloper.github.io/citycoin/main.js"></script>
-</body>
+</body> -->
+    
 </html>
