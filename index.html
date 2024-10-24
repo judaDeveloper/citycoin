@@ -1,499 +1,71 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        
+        <link rel="stylesheet" href="entryform.css">
+    
+        <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+        
+        <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
+        <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore-compat.js"></script>
+        <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-storage-compat.js"></script>
+        <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-auth-compat.js"></script>
+    
+        <title>city coin</title>
+    </head>
+    <body>
+        <div class="main">
+            <div class="userform">
+                <div class="header">
+                    <div class="logo"> <span>City</span> <span>Coin</span></div>
+                    <div class="baton"> <span onclick="resizeimage()">New Member</span> <p class="material-icons" id="bntcloseform" onclick="openCloseforms('clientform', 'exit')">close</p> </div>
+                </div>
+                <div class="forminfo">
+                    <h2>What is required *</h2> <p>Clear photo of National ID (both sides)</p> <p>Clear passphoto Photo</p> <p>Kenyan KRA PIN number</p> 
+                </div>
+                <form action="" class="newform" > 
+                    <label class="photo" for="inputphto">
+                        <input type="file" id="inputphto" accept=".png, .jpg, .jpeg" required oninput="this.className = ''" onchange="resizeimage()" /> 
+                    </label>
 
-    <link rel="stylesheet" href="https://judadeveloper.github.io/citycoin/main.css">
-    <!--Icons-->
-    <script src="https://kit.fontawesome.com/47d4ebac39.js" crossorigin="anonymous"></script>
-
-    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
-    <!--<span class="material-icons">create_new_folder</span>-->
-
-    <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore-compat.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-storage-compat.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-auth-compat.js"></script>
-
-    <title>city coin</title>
-</head>
-<body >
-    <div class="main">
-        <div class="pages">
-            <div class=" page  entryforms shown">
-                <div class="entry clientform new">
-
-                    <div class="cfm_header">  <div class="logo"> <span>City</span> <span>Coin</span></div>
-                        <p>New client</p> <button class="material-icons" id="bntcloseForm" onclick="openCloseforms('clientform', 'exit')">close</button> 
-                    </div>
-
-                    <form action=""  class="cfm_container" id="newclient"> 
-                        <div class="cfm_panel"> 
-                            <div class="cfm_topper"> <h2>What is required *</h2> <p>Clear photo of National ID (both sides)</p> <p>Clear passphoto Photo</p> <p>Kenyan KRA PIN number</p> <div> Account id : <input type="text" id="newAccountid"></div>                       
-                        </div> 
-                        <div class="cfm_form">
-                            <div class="cfm_image">
-                                <label class="passphoto" for="inputfilephoto">
-                                    <div> <input type="file" id="inputfilephoto" accept=".png, .jpg, .jpeg" required oninput="this.className = ''" onchange="resizeImage()" /> <input type="text" id="input_downloadURL" oninput="this.className = ''" /> </div>
-                                    <img src="" alt="" id="photoicon"/>  <p class="passEmpty"><i class="material-icons icon">person</i> click to upload </p> <p class="passValid">click to change <i class="material-icons icon">check_circle</i></p> 
-                                </label> 
-                            </div> 
-                            <div class="cfm_names">
-                                <label class="cfm_label"> <i class="material-icons">person</i> <input type="text" id="fisrtname" placeholder="" oninput="this.className = ''" onkeyup="newUserdata()" > <span class="placeholda">First Name</span><span class="focusline"></span> <i class="material-icons">check_circle</i> </label>
-                                <label class="cfm_label"> <i class="material-icons">person</i>  <input type="text" id="secondname" placeholder="" oninput="this.className = ''"  onkeyup="newUserdata()"> <span class="placeholda">Second Name</span><span class="focusline"></span> <i class="material-icons">check_circle</i> </label>
-                                <label class="cfm_label"> <i class="material-icons">person</i>  <input type="text" id="lastname" placeholder="" oninput="this.className = ''"  onkeyup="newUserdata()"> <span class="placeholda">Last Name</span><span class="focusline"></span> <i class="material-icons">check_circle</i> </label>    
-                                <label class="cfm_label"> <i class="material-icons">calendar</i>  <input type="date" id="birthdate" placeholder="" oninput="this.className = ''"  onchange="newUserdata()"> <span class="placeholda">Date of birth</span><span class="focusline"></span> <!-- <i class="material-icons">check_circle</i>--> </label>
-                            </div>
-                            
-                            <div class="cfm_label gender">
-                                <label class="nptname">Gender <input type="text" id="inputgenda" value="" oninput="radioValueChanged()"  onchange="newUserdata()" /> </label>
-                                <label class="radio"><input type="radio" name="genda" value="1" onclick="radioclicked('genda','inputgenda')" /><span class="checkmark"></span><span>Male</span></label>
-                                <label class="radio"><input type="radio" name="genda" value="2" onclick="radioclicked('genda','inputgenda')" /><span class="checkmark"></span><span>Female</span></label>
-                                <i class="material-icons">check_circle</i>
-                            </div>
-                            <div class="cfm_label marital">
-                                <label class="nptname">Marital <input type="text" id="inputmarital" value="" oninput="radioValueChanged()" onchange="newUserdata()" /> </label>
-                                <div>
-                                    <label class="radio"><input type="radio" name="marital" value="1" onclick="radioclicked('marital','inputmarital')" /><span class="checkmark"></span><span>Single</span></label>
-                                    <label class="radio"><input type="radio" name="marital" value="2" onclick="radioclicked('marital','inputmarital')" /><span class="checkmark"></span><span>Married</span></label>
-                                    <label class="radio"><input type="radio" name="marital" value="3" onclick="radioclicked('marital','inputmarital')" /><span class="checkmark"></span><span>Widowed</span></label>
-                                    <i class="material-icons">check_circle</i>
-                                </div>
-                            </div>
-                            <label class="cfm_label"> <i class="material-icons">email</i>  <input type="text" id="emailaddress" placeholder="" oninput="this.className = ''"  onkeyup="newUserdata()"> <span class="placeholda">Email Address</span><span class="focusline"></span> <i class="material-icons">check_circle</i> </label>
-                            <label class="cfm_label "> <i class="material-icons">phone_android</i>  <input type="text" id="phonenumber" placeholder="" oninput="this.className = ''"  onkeyup="newUserdata()"> <span class="placeholda">Phone Number</span><span class="focusline"></span> <i class="material-icons">check_circle</i> </label>
-                            <label class="cfm_label"> <i class="material-icons">contact_mail</i>  <input type="text" id="idnumber" placeholder="" oninput="this.className = ''"  onkeyup="newUserdata()"> <span class="placeholda">ID Number</span><span class="focusline"></span> <i class="material-icons">check_circle</i> </label>
-                            <label class="cfm_label"> <i class="material-icons">person_pin_circle</i>  <input type="text" id="currentaddress" placeholder="" oninput="this.className = ''"  onkeyup="newUserdata()"> <span class="placeholda">Current address</span><span class="focusline"></span> <i class="material-icons">check_circle</i> </label>
-                            <label class="cfm_label"> <i class="material-icons">location_city</i>  <input type="text" id="sublocation" placeholder="" oninput="this.className = ''"  onkeyup="newUserdata()"> <span class="placeholda">Sublocation</span><span class="focusline"></span> <i class="material-icons">check_circle</i> </label>
-                            <label class="cfm_label"> <i class="material-icons">domain</i> <input type="text" id="Currenttown" placeholder="" oninput="this.className = ''" onkeyup="newUserdata()" > <span class="placeholda">Current town</span><span class="focusline"></span> <i class="material-icons">check_circle</i> </label>
+                    <div class="newdetails">
+                        <label class="label"> <i class="material-icons">person</i> <input type="text" id="fisrtname" placeholder="" oninput="this.className = ''" onkeyup="newUserdata()" > <span class="placeholda">First Name</span><span class="focusline"></span> <i class="material-icons">check_circle</i> </label>
+                        <label class="label"> <i class="material-icons">person</i>  <input type="text" id="secondname" placeholder="" oninput="this.className = ''"  onkeyup="newUserdata()"> <span class="placeholda">Second Name</span><span class="focusline"></span> <i class="material-icons">check_circle</i> </label>
+                        <label class="label"> <i class="material-icons">person</i>  <input type="text" id="lastname" placeholder="" oninput="this.className = ''"  onkeyup="newUserdata()"> <span class="placeholda">Last Name</span><span class="focusline"></span> <i class="material-icons">check_circle</i> </label>    
+                        <label class="label"> <i class="material-icons">calendar</i>  <input type="date" id="birthdate" placeholder="" oninput="this.className = ''"  onchange="newUserdata()"> <span class="placeholda">Date of birth</span><span class="focusline"></span> <!-- <i class="material-icons">check_circle</i>--> </label>
+                        <div class="label gender">
+                            <label class="nptname">Gender <input type="text" id="inputgenda" value="" oninput="radioValueChanged()"  onchange="newUserdata()" /> </label>
+                            <label class="radio"><input type="radio" name="genda" value="1" onclick="radioclicked('genda','inputgenda')" /><span class="checkmark"></span><span>Male</span></label>
+                            <label class="radio"><input type="radio" name="genda" value="2" onclick="radioclicked('genda','inputgenda')" /><span class="checkmark"></span><span>Female</span></label>
+                            <i class="material-icons">check_circle</i>
                         </div>
-                        <div class="clearpaneel">
+                        <div class="label marital">
+                            <label class="nptname">Marital <input type="text" id="inputmarital" value="" oninput="radioValueChanged()" onchange="newUserdata()" /> </label>
+                            <label class="radio"><input type="radio" name="marital" value="1" onclick="radioclicked('marital','inputmarital')" /><span class="checkmark"></span><span>Single</span></label>
+                            <label class="radio"><input type="radio" name="marital" value="2" onclick="radioclicked('marital','inputmarital')" /><span class="checkmark"></span><span>Married</span></label>
+                            <label class="radio"><input type="radio" name="marital" value="3" onclick="radioclicked('marital','inputmarital')" /><span class="checkmark"></span><span>Widowed</span></label>
+                            <i class="material-icons">check_circle</i>
+                        </div>
+                        <label class="label"> <i class="material-icons">email</i>  <input type="text" id="emailaddress" placeholder="" oninput="this.className = ''"  onkeyup="newUserdata()"> <span class="placeholda">Email Address</span><span class="focusline"></span> <i class="material-icons">check_circle</i> </label>
+                        <label class="label "> <i class="material-icons">phone_android</i>  <input type="text" id="phonenumber" placeholder="" oninput="this.className = ''"  onkeyup="newUserdata()"> <span class="placeholda">Phone Number</span><span class="focusline"></span> <i class="material-icons">check_circle</i> </label>
+                        <label class="label"> <i class="material-icons">contact_mail</i>  <input type="text" id="idnumber" placeholder="" oninput="this.className = ''"  onkeyup="newUserdata()"> <span class="placeholda">ID Number</span><span class="focusline"></span> <i class="material-icons">check_circle</i> </label>
+                        <label class="label"> <i class="material-icons">person_pin_circle</i>  <input type="text" id="currentaddress" placeholder="" oninput="this.className = ''"  onkeyup="newUserdata()"> <span class="placeholda">Current address</span><span class="focusline"></span> <i class="material-icons">check_circle</i> </label>
+                        <label class="label"> <i class="material-icons">location_city</i>  <input type="text" id="sublocation" placeholder="" oninput="this.className = ''"  onkeyup="newUserdata()"> <span class="placeholda">Sublocation</span><span class="focusline"></span> <i class="material-icons">check_circle</i> </label>
+                        <label class="label"> <i class="material-icons">domain</i> <input type="text" id="Currenttown" placeholder="" oninput="this.className = ''" onkeyup="newUserdata()" > <span class="placeholda">Current town</span><span class="focusline"></span> <i class="material-icons">check_circle</i> </label>
+                        <div class="clearbutton">
                             <button type="button" id="btncleardetails" onclick="formreset('newclient')">Clear</button>
                         </div>
                         <div class="cfm_footer">
                             <button type="button" id="btnsaveclient" onclick="getnewUserid()">Submit</button>
-                        </div>                        
-                    </form>
-                </div>
-            </div>            
-        </div>   
-    </div>
-        <script src="https://judadeveloper.github.io/citycoin/main.js"></script>
-</body>
-
-
-
-    
-
-<!--OLD CODE-->   
-<!-- <body onresize="resized()">
-    <div class="mainpage">
-        <div class="allpages">
-            <div class="page signinpage">
-                <div class="header">
-                    <h1>Sign in</h1>
-                    <a class="loginclose" href="#"><span class="material-icons">cancel</span></a>
-                </div>
-    
-                <div class="details">
-                    <div class="details_panel">
-                        <div class="bk_image"></div>
-    
-                        <div class="xforms">
-                            <form action="#" id="signinForm">
-                                <div class="inputs">
-                                    <span class="fa fa-user"></span>
-                                    <input type="text" id="inputUserEmail" required placeholder="Email or Phone">
-                                </div>
-                                <div class="inputs">
-                                    <span class="fa fa-lock"></span>
-                                    <input type="password" id="inputUserPasswd" class="pass-key" required placeholder="Password">
-                                    <span class="show">SHOW</span>
-                                </div>
-                                <div class="pass"> <a href="#">Forgot Password?</a> </div>
-                                <div class="btnsubmit"><input type="submit" id="btnsignin" onclick="userSignin()" value="SIGN IN"></div>
-              
-                                <div class="options">
-                                    <p>or sign in with</p>
-                                    <div class="links">
-                                        <div class="facebook"><i class="fab fa-facebook-f"><span>Facebook</span></i></div>
-                                        <div class="instagram"><i class="fab fa-instagram"><span>Instagram</span></i></div>
-                                    </div>
-                                    <div class="signuplink">Don't have account? 
-                                        <a  class="btnsignup" href="#signinpage">Signup Now</a>
-                                    </div>
-                                </div>
-                            </form>
-    
-                            <form action="#" id="signupForm">
-                                <div class="accountpanel">
-                                    <div class="inputs">
-                                        <span class="fa fa-user"></span>
-                                        <input type="text" id="input_username" required placeholder="User name">
-                                    </div>
-                                    <div class="inputs">
-                                        <span class="fa fa-user"></span>
-                                        <input type="text" id="input_Email" required placeholder="Email address">
-                                    </div>
-                                    <div class="inputs">
-                                        <span class="fa fa-user"></span>
-                                        <input type="text" id="input_Phoneno" required placeholder="Phone number">
-                                    </div>
-                                    <div class="inputs">
-                                        <span class="fa fa-lock"></span>
-                                        <input type="password" id="input_Passwd" class="pass-key" required placeholder="Enter password">
-                                        <span class="show">SHOW</span>
-                                    </div>
-                                </div>
-              
-                                <div class="inputsubmit">
-                                    <div class="btnsubmit"><input type="submit" id="btnsignup" onclick="newSignup()" value="SIGN UP"></div>                                
-                                    <div class="options">
-                                        <p>or sign up with</p>
-                                        <div class="links">
-                                            <div class="google snup" onclick="resetInputs('.inputs input')"><i class="fab fa-google"><span>Google</span></i></div>
-                                            <div class="facebook snup"><i class="fab fa-facebook-f"><span>Facebook</span></i></div>
-                                        </div>
-                                        <div class="signin_link">Already a member? 
-                                            <a  class="btnsignup" href="#signinpage">Sign In</a>
-                                        </div>
-              
-                                    </div>
-                                </div>
-                            </form>         
-                        </div>
+                        </div> 
                     </div>
-                </div>
+                </form>
             </div>
-            <div class="page homepage shown">
-                <div class="home header shown">
-                    <div class="logo">
-                        <h1 class="txt_city">City</h1>
-                        <h1 class="txt_coin">Coin</h1>
-                    </div>
-                    <div class="headernav">
-                        <div class="navbuttons">
-                            <p id="btnHome">Home</p>
-                            <p id="btnReports">Reports</p>
-                            <p id="btnReconcile">Reconcile</p>
-                        </div>
-                        <div class="nav_menus">
-                            <p class="login_menu"><i class="material-icons">account_circle</i></p>
-                            <p class="mini_menu"><i class="material-icons">menu</i></p>
-                        </div>
-                    </div>
-                </div>
-                <div  class="home leftmenu shown">
-                    <div class="xselct menubox">
-                        <div class="menu users_menu">
-                            <p onclick="viewlistings('clientslist')"><i class="material-icons">people</i> Clients</p>
-                            <p onclick="viewlistings('stafflist')"><i class="material-icons">person</i> Staff</p>
-                            <p onclick="viewlistings('supplierslist')"><i class="material-icons">people_outline</i> Suppliers</p>
-                        </div>
-                        <div class="menu service_menu">
-                            <p onclick="viewlistings('requestslist')"><i class="material-icons">request_quote</i> Request</p>
-                            <p onclick="viewlistings('loanslist')"><i class="material-icons">currency_exchange</i> Loans</p>
-                            <p onclick="viewlistings('paymentslist')"><i class="material-icons">credit_score</i> Payments</p>
-                            <p onclick="viewlistings('callslist')"><i class="material-icons">more_vert</i> Calls</p>
-                        </div>
-                        <div class="menu settings_menu">
-                            <p onclick="viewlistings('reportslist')"><i class="material-icons">analytics</i> Reports</p>
-                            <p onclick="viewlistings('settingslist')"><i class="material-icons">settings</i> Settings</p>
-                            <p onclick="viewlistings('settingslist')"><i class="material-icons">settings</i> Settings</p>
-                            <p><i class="material-icons">person</i> Log Out</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="home homebody shown">
-                    <div class="dashbody">
-                        <div class="dash dashbord shown">
-                            <div class="dashtop">
-                                <div class="sect section_I">
-                                    <div class="list_tittle">Loans<p id="pagewidth">0</p></div>
-                                </div>
-                                <div class="sect section_II">
-                                    <div class="list_tittle">Payments</div>
-        
-                                </div>
-                            </div>       
-                            <div class="dashbottom">
-                                <div class="sect section_III">
-                                    <div class="list_tittle">Recents</div>
-        
-                                </div>
-                                <div class="sect section_VI">
-                                    <div class="list_tittle">Overal rates</div>
-        
-                                </div>
-                            </div>
-                        </div>                                              
-                        <div class="dash listings">
-                            <div class="list_tittle">
-                                <div class="tittlename"> <p id="listName">Tittle</p> <button class="material-icons" id="btnaddclient" onclick="clientforms('clientform')" >person_add</button></div>
-                                <button class="material-icons" id="btncloselist" onclick="exitListings()">close</button>
-                            </div>
-
-                            <div class="list clientslist">
-                                <div class="mainlist">
-                                    <div class="listgrid" id="listgrid" style="width: 100%; background-color: aliceblue; min-height: 50%; display: grid; grid-template-columns: 1;"></div>
-                                    <button id="addclient" onclick="saveNewclient()">Add</button>
-                                    <ul id="listided">
-                                        <div class="lisitem"></div>
-                                    </ul>
-                                </div>
-                               
-                            </div>
-
-                            <div class="list stafflist">
-
-                            </div>
-        
-                            <div class="list supplierslist">
-
-                            </div>
-        
-                            <div class="list requestslist">
-
-                            </div>
-        
-                            <div class="list loanslist">
-
-                            </div>
-        
-                            <div class="list paymentslist">
-
-                            </div>
-        
-                            <div class="list callslist">
-
-                            </div>
-        
-                            <div class="list reportslist">
-
-                            </div>
-        
-                            <div class="list settingslist">
-
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="home entryforms">
-                    <div class="formtittle">
-                        <h4>Registration</h4>
-                        <button class="material-icons" id="bntcloseForm" onclick="exitClientform()" >close</button>
-                    </div>
-                    <div class="form clientform">
-                        <form class="active" id="newClient" action="#">                            
-                            <div class="tab">
-                                <div class="Imagecontainer">
-                                    <img id="imgPreview" src="http://i.pravatar.cc/500?img=7" alt="" />
-                                    <p id="uploaderText" onclick="fileInputclick('inputUploader')"><i class="fa fa-plus fa-2x" aria-hidden="true"></i></p>
-                                    <div class="uploadInput"><input type="file" id="inputUploader" accept=".png, .jpg, .jpeg" oninput="this.className = ''" onchange="resize()" /></div>
-                                </div>
-                                <p class="tab_tittle">Basic Info:</p>
-                                <div class="names">
-                                    <label for="" class="inpt"><input type="text" placeholder="" oninput="this.className = ''" id="fisrtName" onkeyup="saveVal()"> <span class="placeholder">First name</span><span class="btmline"></span> </label>
-                                    <label for="" class="inpt"><input type="text" placeholder="" oninput="this.className = ''" id="lastName" onkeyup="saveVal()"> <span class="placeholder">Last name</span><span class="btmline"></span> </label>
-                                </div>
-                                <label for="" class="inpt"><input type="email" placeholder="" oninput="this.className = ''" id="emailaddress"> <span class="placeholder">Email address</span><span class="btmline"></span> </label>
-                                <div class="names">
-                                    <label for="" class="inpt"><input type="text" list="genderlist" placeholder="" oninput="this.className = ''" id="gender" onkeyup="saveVal()"> <span class="placeholder">Gender</span><span class="btmline"></span></label>
-                                    <datalist id="genderlist"><option value="Male"><option value="Female"></datalist>                                    
-                                    <label for="" class="inpt"><input type="date" class="null" placeholder="mm/dd/yyyy" oninput="this.className = ''" id="birthDate" onchange="getYears('birthDate')"> <span id="ph_name" class="placeholder">Date of birth</span><span class="btmline"></span></label>
-                                </div>
-
-                                <div class="in_group">
-                                    <label for="" class="inpt"><input type="text" list="marriagelist" onclick="showList()" placeholder="" oninput="this.className = ''" id="maritalStatus" onkeyup="saveVal()"> <span class="placeholder">Marital status</span><span class="btmline"></span></label>
-                                    <datalist id="marriagelist"><option value="Single"><option value="Married"><option value="Widowed"></option></datalist>
-                                </div>
-
-                                <div class="names">
-                                    <label for="" class="inpt"><input type="text" onkeypress="numbersOnly(event)" placeholder=""  onkeyup="limitText(this,10)" oninput="this.className = ''" id="IdNumber"> <span class="placeholder">Id number</span><span class="btmline"></span> </label>
-                                    <label for="" class="inpt"><input type="text" onkeypress="numbersOnly(event)" placeholder=""  onkeyup="limitText(this,10)" oninput="this.className = ''" id="phoneNum"> <span class="placeholder">Phone no.</span><span class="btmline"></span> </label>
-                                </div>
-                            </div>
-        
-                            <div class="tab"> 
-                                <p class="tab_tittle">Contact info;</p>
-                                <label for="" class="inpt"><input type="text" placeholder="" oninput="this.className = ''" id="currentTown"> <span class="placeholder">Current town</span><span class="btmline"></span> </label>
-                                <label for="" class="inpt"><input type="text" placeholder="" oninput="this.className = ''" id="sublocation"> <span class="placeholder">Sub-location</span><span class="btmline"></span> </label>
-                                <label for="" class="inpt"><input type="text" placeholder="" oninput="this.className = ''" id="village"> <span class="placeholder">Village</span><span class="btmline"></span> </label>
-
-                                <div class="worktown">
-                                    <label for="" class="inpt"><input type="text" list="townlist" placeholder="" oninput="this.className = ''" id="worktown" onkeyup="saveVal()"> <span class="placeholder">Work town</span><span class="btmline"></span></label>
-                                    <datalist id="townlist"><option value="Kisumu"><option value="Nairobi"><option value="Mombasa"></option></datalist>
-                                </div>
-    
-                                <div class="workstatus">
-                                    <label for="" class="inpt"><input type="text" list="worklist" placeholder="" oninput="this.className = ''" id="currentWork" onchange="saveVal()()" onblur="workStatus()"> <span class="placeholder">Work status</span><span class="btmline"></span></label>
-                                    <datalist id="worklist" ><option value="Employed"><option value="Business"><option value="Retired"></option></datalist>
-                                </div>
-                                <!--
-                                <p id="wrkStatus">Employer</p>
-                                <div class="workstatus">
-                                    <label for="" class="inpt"><input type="text" placeholder="" oninput="this.className = ''" id="empName"> <span class="placeholder">Employer</span><span class="btmline"></span> </label>
-                                    <label for="" class="inpt"><input type="text" placeholder="" oninput="this.className = ''" id="empPosition"> <span class="placeholder">Position</span><span class="btmline"></span> </label>
-                                    <label for="" class="inpt"><input type="text" placeholder="" oninput="this.className = ''" id="empTown"> <span class="placeholder">City/Town</span><span class="btmline"></span> </label>
-                                    <label for="" class="inpt"><input type="text" placeholder="" oninput="this.className = ''" id="empLocation"> <span class="placeholder">Physical location</span><span class="btmline"></span> </label>
-                                    <label for="" class="inpt"><input type="text" placeholder="" oninput="this.className = ''" id="empContact"> <span class="placeholder">Employer contact</span><span class="btmline"></span> </label>
-                                </div>
-                            </div>
-        
-                            <div class="tab">
-                                <p class="tab_tittle">Business Pictures</p>
-                                <div class="businesspics">
-                                    <!--<div class="Imagecontainer">
-                                        <label>
-                                            <div class="uploadInput"><input type="file" id="lisencepicture" accept=".png, .jpg, .jpeg" oninput="this.className = ''" multiple /></div>
-                                            <div class="uploadText">lisence</div>
-                                        </label>
-                                    </div>
-                                    <div class="Imagecontainer">
-                                        <label>
-                                            <div class="uploadInput"><input type="file" id="interiorpicture" accept=".png, .jpg, .jpeg" oninput="this.className = ''" multiple /></div>
-                                            <div class="uploadText">interior</div>
-                                        </label>
-                                    </div>
-                                    <div class="Imagecontainer">
-                                        <label>
-                                            <div class="uploadInput"><input type="file" id="exteriorpicture" accept=".png, .jpg, .jpeg" oninput="this.className = ''" multiple /></div>
-                                            <div class="uploadText">exterior</div>
-                                        </label>
-                                    </div>
-                                    <div class="Imagecontainer">
-                                        <label>
-                                            <div class="uploadInput"><input type="file" id="oppositepicture" accept=".png, .jpg, .jpeg" oninput="this.className = ''" multiple /></div>
-                                            <div class="uploadText">opposite view</div>
-                                        </label>
-                                    </div>
-                                </div>
-                            </div>
-            
-                            <div class="tab">
-                                <p class="tab_tittle">Agreement Sheet</p>
-                                <div class="agreement1">
-                                    <p>Agreement that kdfjkfdkfdfkfkjdkfjkdjkfj kkkjkj kkjkjkjk kkj</p>
-                                </div>
-                                <div class="agreement2">
-                                    <p>
-                                        Agreement that kdfjkfdkfdfkfkjdkfjkdjkfj kkkjkj kkjkjkjk kkj Agreement that kdfjkfdkfdfkfkjdkfjkdjkfj kkkjkj kkjkjkjk kkj Agreement that kdfjkfdkfdfkfkjdkfjkdjkfj kkkjkj kkjkjkjk kkj Agreement that
-                                        kdfjkfdkfdfkfkjdkfjkdjkfj kkkjkj kkjkjkjk kkj
-                                    </p>
-                                </div>
-                            </div>                       
-        
-                            <div class="submitbutton">
-                                <button type="button" id="prevBtn" onclick="nextprevious(-1)">Previous</button>
-                                <button type="button" id="nextBtn" onclick="nextprevious(1)">Next</button>
-                            </div>
-                            <div class="form_steps" style="text-align:center;margin-top:15px;">
-                                <span class="step"></span>
-                                <span class="step"></span>
-                                <span class="step"></span>
-                                <span class="step"></span>
-                            </div>
-                        </form>
-                    </div>
-                    <div class="form loanform">
-                        <form id="newLoan" action="#">
-                            <h1>Loan Form</h1>
-                            <div style="text-align:center;margin-top:15px;">
-                                <span class="step2"></span>
-                                <span class="step2"></span>
-                            </div>
-                            <div class="tab">
-                                Loan Value
-                                <p>Amount<input type="number" placeholder="Ksh.0.00" oninput="this.className = ''" id="inputAmount" /></p>
-                                <p>Rate<input type="number" placeholder="0.00%" oninput="this.className = ''" id="inputRate" /></p>
-                                Duration
-                                <fieldset class="inputgroup period">
-                                    <label class="grp_input"><input type="text" oninput="this.className = ''" id="inputLoanperiod" /></label>
-                                    <label class="radio_lbl">1 week<input type="radio" name="period" id="1week" onclick="loanCheckboxes('1week')" /><span class="checkmark"></span></label>
-                                    <label class="radio_lbl">2 weeks<input type="radio" name="period" id="2weeks" onclick="loanCheckboxes('2weeks')" /><span class="checkmark"></span></label>
-                                    <label class="radio_lbl">3 weeks<input type="radio" name="period" id="3weeks" onclick="loanCheckboxes('3weeks')" /><span class="checkmark"></span></label>
-                                    <label class="radio_lbl">4 weeks<input type="radio" name="period" id="4weeks" onclick="loanCheckboxes('4weeks')" /><span class="checkmark"></span></label>
-                                    <label class="radio_lbl">5 weeks<input type="radio" name="period" id="5weeks" onclick="loanCheckboxes('5weeks')" /><span class="checkmark"></span></label>
-                                </fieldset>
-            
-                                Payment plan
-                                <fieldset class="inputgroup paymentplan">
-                                    <label class="grp_input"><input type="text" oninput="this.className = ''" id="inputPaymntplan" /></label>
-                                    <label class="radio_lbl">Single payment<input type="radio" name="paymntplan" id="onePayment" onclick="loanCheckboxes('onePayment')" /><span class="checkmark"></span></label>
-                                    <label class="radio_lbl">By instalments<input type="radio" name="paymntplan" id="instalments" onclick="loanCheckboxes('instalments')" /><span class="checkmark"></span></label>
-            
-                                    <fieldset class="inputgroup instalments">
-                                        <label class="grp_input"> <input type="text" oninput="this.className = ''" id="inputInstlmnt" /> </label>
-                                        <label class="radio_lbl">Daily<input type="radio" name="instlment" id="daily" onclick="loanCheckboxes('daily')" /><span class="checkmark"></span></label>
-                                        <label class="radio_lbl">Every <input type="radio" name="instlment" id="everydays" onclick="loanCheckboxes('everydays')" /><span class="checkmark"></span><input type="text" id="daysNumber" />days</label>
-                                        <label class="radio_lbl">Weekly<input type="radio" name="instlment" id="weekly" onclick="loanCheckboxes('weekly')" /><span class="checkmark"></span></label>
-                                        <label class="radio_lbl">Monthly<input type="radio" name="instlment" id="monthly" onclick="loanCheckboxes('monthly')" /><span class="checkmark"></span></label>
-                                    </fieldset>
-                                </fieldset>
-                            </div>
-                            <div class="tab">
-                                Agreement Form:
-                                <p>
-                                    Entire agreement clause: Many contracts, including personal loan agreement documents, feature a section detailing that any other arrangements outside of what's documented in the contract aren't part of the agreement.
-                                    Signatures: Finally, don't forget to have the borrower and lender each sign the document.
-                                </p>
-                                <p><input placeholder="Signature" oninput="this.className = ''" id="email" /></p>
-                                <div>
-                                    Full agreement
-                                    <p>
-                                        Entire agreement clause: Many contracts, including personal loan agreement documents, feature a section detailing that any other arrangements outside of what's documented in the contract aren't part of the
-                                        agreement.
-                                    </p>
-                                </div>
-                                <p><input placeholder="Signature" oninput="this.className = ''" id="signature" /></p>
-                            </div>
-                            <div class="divextenda">
-                                <div class="submitbutton">
-                                    <button type="button" id="prevBtn2" onclick="intialexe(-1)">Previous</button>
-                                    <button type="button" id="nextBtn2" onclick="nextPrev2(1)">Next</button>
-                                </div>
-                            </div>
-                        </form>
-                    </div>
-                    <div class="form paymentform">
-
-                    </div>                          
-                </div>
-            </div>
-            <div class="page actionpage">
-                <div class="act adminview">
-                    <div class="profile_section">
-                        <div class="ps_left">
-    
-                        </div>
-    
-                        <div class="ps_right">
-    
-                        </div>
-                    </div>
-                </div>
-    
-                <div class="act clientview">
-                    <div class="cdb_header">
-                        <h3 onclick="localdataBase()">JUDA O. MOHAMED</h3>
-                        <button id="btnClose"><i class="material-icons btncancel">close</i></button>
-                    </div>
-                    <div class="profile_section">
-
-                        <div class="ps_left">
-    
-                        </div>
-    
-                        <div class="ps_right">
-    
-                        </div>
-                    </div>
-                </div>
-            </div> 
-        </div>      
-    </div>
-    <script src="https://judadeveloper.github.io/citycoin/main.js"></script>
-</body> -->
-    
+        </div>
+        <script src="entryform.js"></script>
+    </body>
 </html>
+
+
