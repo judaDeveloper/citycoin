@@ -116,13 +116,14 @@ const uploadimage = (srcEncoded) => {
 	ref.child(name).putString(srcEncoded, 'data_url').then((snapshot) => snapshot.ref.getDownloadURL()).then(myurl => {
 		if (myurl !== '') {
 			inputurl.value = myurl;
-			inputurl.dispatchEvent(new Event('change'));
+			inputurl.dispatchEvent(new Event('change'));    //birthdate
 
 			document.querySelector('.usericon').classList.add('uploaded');
 			document.querySelector('.photo').style. backgroundImage = `url( ${inputurl.value})`;	
 		}
 	});
 };
+
 
 const saveuser = () => {
 	let data = JSON.parse(localStorage.getItem("newuserdata"));
