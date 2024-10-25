@@ -36,13 +36,13 @@
                             <label class="label">  <input type="text" id="fisrtname" placeholder="" oninput="this.className = ''" onkeyup="newUserdata()" > <span class="placeholda">First Name</span><span class="focusline"></span> <i class="material-icons icoxx">check_circle</i> </label>
                             <label class="label">  <input type="text" id="secondname" placeholder="" oninput="this.className = ''"  onkeyup="newUserdata()"> <span class="placeholda">Second Name</span><span class="focusline"></span> <i class="material-icons icoxx">check_circle</i> </label>
                             <label class="label">  <input type="text" id="lastname" placeholder="" oninput="this.className = ''"  onkeyup="newUserdata()"> <span class="placeholda">Last Name</span><span class="focusline"></span> <i class="material-icons icoxx">check_circle</i> </label>    
-                            <label class="label">  <input type="date" id="birthdate" placeholder="" oninput="this.className = ''"  onchange="newUserdata()"> <span class="placeholda">Date of Birth</span><span class="focusline"></span> <!-- <i class="material-icons">check_circle</i>--> </label>
                             <div class="label gender">
                                 <label class="nptname">Gender <input type="text" id="inputgenda" placeholder="" oninput="radioValueChanged('genda','inputgenda')"  onchange="newUserdata()" /> </label>
                                 <label class="radio"><input type="radio" name="genda" value="1" onclick="radioclicked('genda','inputgenda')" /><span class="checkmark"></span><span>Male</span></label>
                                 <label class="radio"><input type="radio" name="genda" value="2" onclick="radioclicked('genda','inputgenda')" /><span class="checkmark"></span><span>Female</span></label>
                                 <i class="material-icons icoxx">check_circle</i>
                             </div>
+                            <label class="label">  <input type="date" id="birthdate" placeholder="" oninput="this.className = ''"  onchange="newUserdata()">  <span class="placeholda">Birth Date</span> <span class="focusline"></span>  </label> 
                             <div class="label marital">
                                 <label class="nptname">Marital <input type="text" id="inputmarital" placeholder="" onchange="radioValueChanged('marital','inputmarital')" /> </label>
                                 <label class="radio"><input type="radio" name="marital" value="1" onclick="radioclicked('marital','inputmarital')" /><span class="checkmark"></span><span>Single</span></label>
@@ -66,6 +66,7 @@
                 </div>
             </div>
         </div>
+
         <script src="https://judadeveloper.github.io/citycoin/main.js"></script>
     </body>
 </html>
