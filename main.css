@@ -14,14 +14,14 @@ body { width: 100%; height: 100%; }
 .baton p { width: 28px; height: 28px; border-radius: 100%; font-size: 20px; text-align: center; line-height: 28px; border: none; align-self: self-start; color: #ffffff; background-color: #ffffff6e; }
 .baton p:hover { transform: scale(110%); color: #ff7e7e; background-color: #ffffffc3; }
 
-.datapanel {width: 100%; height: 100%; padding-bottom: 40px; overflow-y: auto; background-color: #d3e0f877;}
-.newform {width: 100%; padding: 5px; padding-bottom: 15px;  display: grid; gap: 10px;  }
-.forminfo { width: 100%; min-width: 300px; padding: 10px 20px 10px 20px; gap: 5px; font-size: 14px; display: flex; flex-direction: column;  justify-content: start; align-items: start; background-color: #ffffffe5; }
+.datapanel {width: 100%; height: 100%; padding-bottom: 40px; overflow-y: auto; background-color: #f3f3f377;}
+.newform {width: 100%; padding: 5px; padding-bottom: 15px;  display: grid; gap: 15px;  }
+.forminfo { width: 100%; min-width: 300px; padding: 10px 20px 10px 20px; gap: 5px; font-size: 14px; display: flex; flex-direction: column;  justify-content: start; align-items: start; background-color: #ffffff37; }
 
-.photo { width: 200px; height: 200px; border-radius: 10px; margin: 0px auto; position: relative; cursor: pointer; }.photo input { width: 0px; height: 0px; border: none; opacity: 0; }
+.photo { width: 200px; height: 200px; border-radius: 30px; margin: 0px auto; position: relative; cursor: pointer; }.photo input { width: 0px; height: 0px; border: none; opacity: 0; }
 
 .photo {  background-color: #ffffffe5;  background-size: cover; background-repeat: no-repeat;
-    /* background-image: url("https://travel.state.gov/content/dam/passports/photo_examples/_MG_3425_GOOD.png/jcr:content/renditions/original"); */
+    background-image: url("/.jpg");
 }
 .newdetails { padding: 20px 5px 0px 5px; gap: 8px; display: grid; }
 .label { width: 100%; min-width: 250px; max-width: 300px; height: 50px; margin: 0px auto; position: relative; border-radius: 0px; display: flex; flex-direction: row; justify-content: start; align-items: center; }
@@ -69,3 +69,4 @@ body { width: 100%; height: 100%; }
 .clearbutton {width: 100%; min-width: 250px; max-width: 340px; padding: 20px 10px 10px 10px; text-align: start; button {width: 80px; height: 35px; border: none; border-radius: 3px; box-shadow: #00000041 0px 0px 2px 0px;  color: #474747; background-color: #ffffff4b; &:hover {font-size: 14px; color: #ff0000; background-color: #ff000014;}} }
 .footerbaton { width: 100%; min-width: 250px; height: 100px; padding: 10px 14% 40px 14%; display: flex; justify-content: end; align-items: end; border-top: 1px solid #0065fc; background-color: #ffffff9d; }
 .footerbaton button { width: 120px; height: 40px; border-radius: 3px; font-size: 15px; font-weight: 600; border: none; cursor: pointer; color: #ffffff; background-color: #007bff; &:hover {background-color: #008df9; color: #ffffff; font-weight: 600; }}
+
