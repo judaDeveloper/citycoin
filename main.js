@@ -7,6 +7,7 @@ const firebaseConfig = {
     messagingSenderId: "606775878283",
     appId: "1:606775878283:web:07d3d79d7b186be576aa8e"
 };
+
 firebase.initializeApp(firebaseConfig);
 const db = firebase.firestore();
 
@@ -14,13 +15,16 @@ var newcid;
 
 const resized = () => {
 	let width = window.innerWidth;
-	let usrfom = document.getElementById('userform').clientWidth;
-	document.getElementById("pagewdth").innerHTML = 'New Member '+width +'/'+ usrfom;
+	//let usrfom = document.getElementById('userform').clientWidth;
+	//document.getElementById("pagewdth").innerHTML = 'New Member '+width +'/'+ usrfom;
 }
 const resetform = (id) => {
 	document.querySelector(id).reset();
 	document.querySelector('.photo').value ='';
 };
+
+resetform ('.newform');
+
 function radioclicked(radio, inptid) {
 	let value = null;
 	let x = document.getElementsByName(radio);
@@ -99,21 +103,22 @@ const resizeimage = () => {
 			let ctx = x.getContext('2d');
 			ctx.drawImage(el.target, 0, 0, x.width, x.height);
 			let srcEncoded = ctx.canvas.toDataURL('image/png', 1);
+			document.querySelector('.usericon').classList.add('shown');
             preview.style. backgroundImage = `url( ${srcEncoded})`;	
 			uploadimage(srcEncoded);
 		};
 	};
-};
+}; 
 const uploadimage = (srcEncoded) => {
 	let inputurl = document.getElementById("inputuploadurl");
 	let ref = firebase.storage().ref("/UserImages");
-
 	let name = +new Date()+ "00000";
 	ref.child(name).putString(srcEncoded, 'data_url').then((snapshot) => snapshot.ref.getDownloadURL()).then(myurl => {
 		if (myurl !== '') {
 			inputurl.value = myurl;
-			inputurl.classList.add('uploaded');
 			inputurl.dispatchEvent(new Event('change'));
+
+			document.querySelector('.usericon').classList.add('uploaded');
 			document.querySelector('.photo').style. backgroundImage = `url( ${inputurl.value})`;	
 		}
 	});
@@ -177,6 +182,3 @@ const deleteUnusedId = () => {
 		alert("Error getting document:", error);
 	});
 };
-
-
-
