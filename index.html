@@ -15,7 +15,7 @@
     
         <title>city coin</title>
     </head>
-    <body onresize="resized()">
+<body onresize="resized()">
         <div class="main">
             <div class="userform" id="userform">
                 <div class="header">
@@ -28,15 +28,15 @@
                             <h2>What is required *</h2> <p>Clear photo of National ID (both sides)</p> <p>Clear passphoto Photo</p> <p>Kenyan KRA PIN number</p> 
                         </div>
                         <label class="photo" for="inputphto">
-                            <input type="file" id="inputphto" accept=".png, .jpg, .jpeg" required oninput="this.className = ''" onchange="resizeimage()" /> 
+                            <input type="file" id="inputphto" accept=".png, .jpg, .jpeg" required oninput="this.className = ''" onchange="resizeimage()" />
+                            <div class="usericon"> <i class="material-icons icox">account_circle</i> <i class="material-icons icox">add_a_photo</i> </div>
                             <input type="text" id="inputuploadurl" oninput="this.className = ''" onchange="newUserdata()"/>
                         </label>
-    
                         <div class="newdetails">
-                            <label class="label"> <i class="material-icons icox">person</i> <input type="text" id="fisrtname" placeholder="" oninput="this.className = ''" onkeyup="newUserdata()" > <span class="placeholda">First Name</span><span class="focusline"></span> <i class="material-icons icoxx">check_circle</i> </label>
-                            <label class="label"> <i class="material-icons icox">person</i>  <input type="text" id="secondname" placeholder="" oninput="this.className = ''"  onkeyup="newUserdata()"> <span class="placeholda">Second Name</span><span class="focusline"></span> <i class="material-icons icoxx">check_circle</i> </label>
-                            <label class="label"> <i class="material-icons icox">person</i>  <input type="text" id="lastname" placeholder="" oninput="this.className = ''"  onkeyup="newUserdata()"> <span class="placeholda">Last Name</span><span class="focusline"></span> <i class="material-icons icoxx">check_circle</i> </label>    
-                            <label class="label"> <i class="material-icons icox">calendar</i> <input type="date" id="birthdate" placeholder="" oninput="this.className = ''"  onchange="newUserdata()"> <span class="placeholda">Date of Birth</span><span class="focusline"></span> <!-- <i class="material-icons">check_circle</i>--> </label>
+                            <label class="label">  <input type="text" id="fisrtname" placeholder="" oninput="this.className = ''" onkeyup="newUserdata()" > <span class="placeholda">First Name</span><span class="focusline"></span> <i class="material-icons icoxx">check_circle</i> </label>
+                            <label class="label">  <input type="text" id="secondname" placeholder="" oninput="this.className = ''"  onkeyup="newUserdata()"> <span class="placeholda">Second Name</span><span class="focusline"></span> <i class="material-icons icoxx">check_circle</i> </label>
+                            <label class="label">  <input type="text" id="lastname" placeholder="" oninput="this.className = ''"  onkeyup="newUserdata()"> <span class="placeholda">Last Name</span><span class="focusline"></span> <i class="material-icons icoxx">check_circle</i> </label>    
+                            <label class="label">  <input type="date" id="birthdate" placeholder="" oninput="this.className = ''"  onchange="newUserdata()"> <span class="placeholda">Date of Birth</span><span class="focusline"></span> <!-- <i class="material-icons">check_circle</i>--> </label>
                             <div class="label gender">
                                 <label class="nptname">Gender <input type="text" id="inputgenda" placeholder="" oninput="radioValueChanged('genda','inputgenda')"  onchange="newUserdata()" /> </label>
                                 <label class="radio"><input type="radio" name="genda" value="1" onclick="radioclicked('genda','inputgenda')" /><span class="checkmark"></span><span>Male</span></label>
@@ -49,12 +49,12 @@
                                 <label class="radio"><input type="radio" name="marital" value="2" onclick="radioclicked('marital','inputmarital')" /><span class="checkmark"></span><span>Married</span></label>
                                 <i class="material-icons icoxx">check_circle</i>
                             </div>
-                            <label class="label"> <i class="material-icons icox">email</i>  <input type="text" id="emailaddress" placeholder="" oninput="this.className = ''"  onkeyup="newUserdata()"> <span class="placeholda">Email Address</span><span class="focusline"></span> <i class="material-icons icoxx">check_circle</i> </label>
-                            <label class="label "> <i class="material-icons icox">phone_android</i>  <input type="text" id="phonenumber" placeholder="" oninput="this.className = ''"  onkeyup="newUserdata()"> <span class="placeholda">Phone Number</span><span class="focusline"></span> <i class="material-icons icoxx">check_circle</i> </label>
-                            <label class="label"> <i class="material-icons icox">contact_mail</i>  <input type="text" id="idnumber" placeholder="" oninput="this.className = ''"  onkeyup="newUserdata()"> <span class="placeholda">Id Number</span><span class="focusline"></span> <i class="material-icons icoxx">check_circle</i> </label>
-                            <label class="label"> <i class="material-icons icox">person_pin_circle</i>  <input type="text" id="currentaddress" placeholder="" oninput="this.className = ''"  onkeyup="newUserdata()"> <span class="placeholda">Current address</span><span class="focusline"></span> <i class="material-icons icoxx">check_circle</i> </label>
-                            <label class="label"> <i class="material-icons icox">location_city</i>  <input type="text" id="sublocation" placeholder="" oninput="this.className = ''"  onkeyup="newUserdata()"> <span class="placeholda">Sublocation</span><span class="focusline"></span> <i class="material-icons icoxx">check_circle</i> </label>
-                            <label class="label"> <i class="material-icons icox">domain</i> <input type="text" id="currenttown" placeholder="" oninput="this.className = ''" onkeyup="newUserdata()" > <span class="placeholda">Current town</span><span class="focusline"></span> <i class="material-icons icoxx">check_circle</i> </label>
+                            <label class="label">  <input type="text" id="emailaddress" placeholder="" oninput="this.className = ''"  onkeyup="newUserdata()"> <span class="placeholda">Email Address</span><span class="focusline"></span> <i class="material-icons icoxx">check_circle</i> </label>
+                            <label class="label ">  <input type="text" id="phonenumber" placeholder="" oninput="this.className = ''"  onkeyup="newUserdata()"> <span class="placeholda">Phone Number</span><span class="focusline"></span> <i class="material-icons icoxx">check_circle</i> </label>
+                            <label class="label">   <input type="text" id="idnumber" placeholder="" oninput="this.className = ''"  onkeyup="newUserdata()"> <span class="placeholda">Id Number</span><span class="focusline"></span> <i class="material-icons icoxx">check_circle</i> </label>
+                            <label class="label">  <input type="text" id="currentaddress" placeholder="" oninput="this.className = ''"  onkeyup="newUserdata()"> <span class="placeholda">Current address</span><span class="focusline"></span> <i class="material-icons icoxx">check_circle</i> </label>
+                            <label class="label">  <input type="text" id="sublocation" placeholder="" oninput="this.className = ''"  onkeyup="newUserdata()"> <span class="placeholda">Sublocation</span><span class="focusline"></span> <i class="material-icons icoxx">check_circle</i> </label>
+                            <label class="label">  <input type="text" id="currenttown" placeholder="" oninput="this.className = ''" onkeyup="newUserdata()" > <span class="placeholda">Current town</span><span class="focusline"></span> <i class="material-icons icoxx">check_circle</i> </label>
                             <div class="clearbutton">
                                 <button type="button" id="btncleardetails" onclick="resetform('.newform')">Clear</button>
                             </div>
