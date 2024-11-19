@@ -13,7 +13,6 @@ body {
   display: block;
   padding: 5px;
   background: #e4e4e4;
-  padding-bottom: 15px;
   height: 100vh;
 }
 
@@ -21,8 +20,8 @@ body {
   width: 100%;
   max-width: 1000px;
   height: 100%;
-  padding: 10px 10px;
-
+  padding: 0px 20px;
+  padding-bottom: 10px;
   margin: 0px auto;
 }
 
@@ -31,14 +30,14 @@ body {
 }
 
 /* Header/Blog Title */
-.header {
+.myheader {
   font-size: 20px;
   text-align: center;
   background: white;
   border-radius: 5px;
   padding: 5px 10px;
 }
-.header .logo { 
+.myheader div { 
   width: 165px; 
   min-width: 165px; 
   padding: 0px 0px 0px 5px; 
@@ -48,25 +47,23 @@ body {
   align-items: end;  
   padding: 10px; 
 }
-
-.header .logo span {
-  font-size: 30px; 
-  font-weight: 700; 
-  &:nth-of-type(1) {
-    padding: 5px 4px 5px 10px; 
-    border-radius: 0px 16px 0px 10px; 
-     color: #ffffff;  
-     background-color: #ff4242; 
-    } 
-  &:nth-of-type(2) {
-    text-align: left; 
-    color: #ff0000; 
-    padding: 6px 10px 4px 4px; 
-    border-radius: 16px 0px 10px 0px;
-     background-color: #dfdfdf; 
-    }
- }
-
+.logo1 {
+  font-size: 25px; 
+  font-weight: 700;
+  padding: 5px 4px 5px 10px; 
+  border-radius: 0px 16px 0px 10px; 
+   color: #ffffff;  
+   background-color: #ff4242; 
+}
+.logo2 {
+  font-size: 25px; 
+  font-weight: 700;
+  text-align: left; 
+  color: #ff0000; 
+  padding: 6px 10px 4px 4px; 
+  border-radius: 16px 0px 10px 0px;
+  background-color: #dfdfdf;
+}
 .columntwo { 
     width: 100%;
     padding: 0px 0px;
@@ -109,9 +106,10 @@ button:hover {
   }
 }
 
+
 /*FORM*/
 .modal {
-  display: none; /* Hidden by default */
+  display: block; /* Hidden by default */
   position: fixed; /* Stay in place */
   z-index: 1; /* Sit on top */
   left: 0;
@@ -127,26 +125,40 @@ button:hover {
   min-width: 340px;
   max-width: 800px;
   margin: 0px auto;
-  padding: 10px;
+  padding: 3px;
   background-color: #a0a0a066;
+  background-color: #91c8ff66;
+}
+.fm_hd01 h1 {
+  padding-bottom: 10px;
+}
+.fm_hd01 p {
+  padding-bottom: 10px;
 }
 
-/* Add padding to containers */
 .container {
+  border-radius: 5px;
   padding: 16px;
   background-color: #ffffff;
   border: 1px solid #888;
 }
-.header001 {
+@media screen and (max-width: 450px) {
+  .container {
+    padding: 0px; 
+  }
+  .modal form {
+    width: 100%;
+  }
+}
+.fm_hd01 {
   position: relative;
 }
-
 .fmclose {
   position: absolute;
-  right: 25px;
+  right: 10px;
   top: 0;
-  color: #000;
-  font-size: 35px;
+  color: #9b9898;
+  font-size: 30px;
   font-weight: bold;
 }
 
@@ -155,11 +167,18 @@ button:hover {
   color: red;
   cursor: pointer;
 }
-.photo { 
-  width: 180px; 
-  height: 180px; 
-  margin: 0px auto; 
-  margin-top: 30px; 
+.entries {
+  width: 80%;
+  min-width: 300px;
+  max-width: 450px;
+  margin: 0px auto;
+  padding: 5px;
+}
+.photo {
+  width: 180px;
+  height: 180px;
+  margin: 10px auto; 
+  margin-top: 10px; 
   border-radius: 10px;
   position: relative; 
   cursor: pointer; 
@@ -167,11 +186,18 @@ button:hover {
   flex-direction: column;  
   justify-content: center; 
   align-items: center; 
-}
-.photo {  
-  background-size: cover; 
-  background-repeat: no-repeat;
   background: #f1f1f1;
+}
+.photo:hover, .photo:focus {
+  background-color: #f7f7f7;
+}
+.photo:hover i, .photo:focus i{
+  font-size: 60px; color: #59bbf877;
+}
+.photo img {
+  display: block;
+  border-radius: 11px;
+  background: #a88080;
 }
 .photo input { 
   width: 0px; 
@@ -179,45 +205,103 @@ button:hover {
   border: none; 
   opacity: 0; 
 }
-.usericon { 
-  width: 50%; height: 50%; 
-  position: relative; display: 
-  flex; flex-direction: column;  
-  justify-content: center; align-items: center;  
+.photo i { 
+   font-size: 70px; 
+   color: #ffffff;
 }
-.usericon i { 
-   font-size: 70px; color: #cccccc;
-}
-.photo:hover {
-  background-color: #ddd;
-  .usericon i { 
-    font-size: 60px; color: #ffffff;
- }
- } 
-
-.usericon.shown, .usericon.upl  { 
+.photo button {
+  width: 100%;
+  color: white;
+  padding: 0px 10px;
+  height: 30px;
+  margin: 8px 0;
+  top: 100%;
+  border: none;
+  cursor: pointer;
+  position: absolute;
+  opacity: 0.8;
+  background-color: #0099ff;
   display: none;
 }
+.photo button:hover, .photo button:focus{
+  opacity: 1;
+  font-size: 90%;
+}
+.photo h6 {
+  top: 80%;
+  display: none;
+  position: absolute;
+  color: #0099ff;
 
-.tabs {
-  width: 80%;
-  max-width: 450px;
-  margin: 0px auto;
+}
+.photo .loader {
+  display: none;
+  position: absolute;
+  width: 40px;
+  padding: 4px;
+  aspect-ratio: 1;
+  border-radius: 50%;
+  background: #239cff;
+  --_m: 
+    conic-gradient(#0000 10%,#000),
+    linear-gradient(#000 0 0) content-box;
+  -webkit-mask: var(--_m);
+          mask: var(--_m);
+  -webkit-mask-composite: source-out;
+          mask-composite: subtract;
+  animation: l3 1s infinite linear;
+}
+@keyframes l3 {to{transform: rotate(1turn)}}
+
+.photo.resize, .photo.load {
+  background-color: #f7f7f7;
 }
 
-.tab {
-    display: block;
-    min-width: 280px;
+.photo.resize i, .photo.load i  {
+  display: none;
 }
-
-.lbl01 {
+.photo.resize h6, .photo.load h6 {
+  display: block;
+}
+.photo.resize .loader, .photo.load .loader{
+  display: block;
+}
+.photo.uploaded {
+  width: max-content; 
+  height: max-content;
+  margin: 30px auto; 
+  background-color: transparent;
+}
+.photo.uploaded i {
+  display: none;
+}
+.photo.uploaded img{ 
+  display: block;
+}
+.photo.uploaded button{ 
+  display: block;
+}
+.photo.uploaded h6 {
+  display: none;
+}
+.photo.uploaded .loader {
+  display: none;
+}
+#uploadURL {
+  height: 10px;
+  font-size: 8px;
+  opacity: 0;
+}
+.lbl {
     display: block;
     padding: 1px 5px;
     margin-bottom: 5px;
     min-width: 280px;
 }
-.lbl01 b {
-  font-size: 11px;
+.lbl b {
+  font-size: 12px;
+  font-weight: 400;
+  color: #5c5c5c;
 }
 .fmp {
   padding: 10px 5px;
@@ -226,7 +310,7 @@ button:hover {
   font-weight: 600;
 }
 /* Full-width input fields */
-.lbl01 input {
+.lbl input {
     width: 100%;
     padding: 12px;
     display: inline-block;
@@ -251,7 +335,7 @@ button:hover {
   margin-left: 10%;
 }
 
-input[type=text]:focus, input[type=password]:focus {
+input[type=text]:focus {
   background-color: #ddd;
   outline: none;
 }
@@ -261,7 +345,6 @@ hr {
   border: 1px solid #f1f1f1;
   margin-bottom: 25px;
 }
-
 .regsubmit {
   width: 90%;
   max-width: 450px;
@@ -293,7 +376,7 @@ a {
 }
 
 /* Add Zoom Animation */
-.animate {
+.animated {
   -webkit-animation: animatezoom 0.6s;
   animation: animatezoom 0.6s
 }
