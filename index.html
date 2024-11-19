@@ -17,9 +17,9 @@
         <title>city coin</title>
     </head>
     <body>
-          <div class="main">
-    <div class="header">
-      <div class="logo"> <span>City</span> <span>Coin</span></div>
+  <div class="main">
+    <div class="myheader">
+      <div class="logo"> <span class="logo1">City</span> <span class="logo2">Coin</span></div>
     </div>
     <div class="row">
       <div class="columntwo">
@@ -27,7 +27,7 @@
           <h2>USER </h2>
           <h5>If no account click Register to submit your details</h5>
           <div class="card two">
-            <button onclick="document.getElementById('userform').style.display='block'" style="width:100%;">
+            <button onclick="openResetForm()" style="width:100%;">
               <i class="bi bi-person-plus" style="font-size: 1.3rem; color: white; margin-right: 5px;"></i> Register     
             </button>
             <button style="width:100%;">
@@ -46,129 +46,108 @@
     </div>
 
     <!----  FORMS   -->
-    <div class="modal"  id="userform" >
-      <form action="">
+    <div class="modal" >
+      <form action="" id="userform">
         <div class="container animate">
-          <div class="header001"> 
-            <h1>Register</h1>
+          <div class="fm_hd01"> 
+            <h1 >Register</h1>
             <p>Please fill in this form to create an account.</p>
-            <span onclick="document.getElementById('userform').style.display='none'" class="fmclose" title="Close form">&times</span>
+            <span onclick="document.querySelector('.modal').style.display='none'" class="fmclose" title="Close form">&times</span>
           </div>
           <hr>
-          <div class="tabs">
-            <div class="tab t1">
-              <label class="photo" for="inputimg">
-                <input type="file" id="inputimg" accept=".png, .jpg, .jpeg" required oninput="this.className = ''" onchange="resizeimage()" />
-                <div class="usericon"> <i class="material-icons icox">add_a_photo</i> </div>
-                <input type="text" id="uploadURL" oninput="this.className = ''" onchange="getnewdata()"/>
-              </label>
+          <div class="entries">
+            <label class="photo" for="inputimg">
+              <img src="" alt="" id="myimage">
+              <input id="inputimg" type="file" accept=".png, .jpg, .jpeg" required oninput="this.className = ''" onchange="resizeimage()" />
+              <i class="material-icons">add_a_photo</i>
+              <button type="button" id="btnimg" onclick="document.getElementById('inputimg').click()">Change</button>
+              <div class="loader"></div>
+              <h6 id="loadtxt">Resizing ....</h6>
+            </label>
 
-              <p class="fmp"> BASIC INFO</p>
+            <p class="fmp"> BASIC INFO</p>
+            <input type="text" id="uploadURL" oninput="this.className = ''" required onchange="getnewdata()"/>
+            <label class="lbl" for="fname"><b>First name</b> <input type="text" placeholder="Enter name" name="fname" id="fname" required oninput="getnewdata()">
+            </label>
 
-              <label class="lbl01" for="fname"><b>First name</b>
-                <input type="text" placeholder="Enter name" name="fname" id="fname" required oninput="getnewdata()">
-              </label>
+            <label class="lbl" for="sname"><b>Second name</b> <input type="text" placeholder="Enter name" name="sname" id="sname" required oninput="getnewdata()">
+            </label>
 
-              <label class="lbl01" for="sname"><b>Second name</b>
-                <input type="text" placeholder="Enter name" name="sname" id="sname" required oninput="getnewdata()">
-              </label>
+            <label class="lbl" for="sname"><b>Last/Sir name</b> <input type="text" placeholder="Enter name" id="lname" required oninput="getnewdata()">
+            </label>
 
-              <label class="lbl01" for="sname"><b>Last/Sir name</b>
-                <input type="text" placeholder="Enter name" id="lname" required oninput="getnewdata()">
-              </label>
-
-              <div class="lbl01 chxbox xx">
-                <b>Gender</b>
-                <div class="items">
-                  <input type="text" id="gender" required>
-                  <label for="msex"> <input type="checkbox" value="M" id="msex" name="sex" onclick="selectCheckbox('msex','gender')"> Male </label>
-                  <label for="fsex"> <input type="checkbox" value="F" id="fsex" name="sex" onclick="selectCheckbox('fsex','gender')"> Female</label>              
-                </div>
+            <div class="lbl chxbox xx"> <b>Gender</b>
+              <div class="items">
+                <input type="text" id="gender" required>
+                <label for="msex"> <input type="checkbox" value="M" id="msex" name="sex" onclick="selectCheckbox('msex','gender')"> Male </label>
+                <label for="fsex"> <input type="checkbox" value="F" id="fsex" name="sex" onclick="selectCheckbox('fsex','gender')"> Female</label>              
               </div>
-
-              <label class="lbl01"><b>Date of birth</b>
-                <input type="text" placeholder="Select date" id="dobirth" required oninput="getnewdata()">
-              </label>
-
-              <div class="lbl01 chxbox">
-                <b>Marriage</b>
-                <div class="items">
-                  <input type="text" id="marital" required>
-                  <label for="sngle"> <input type="checkbox" value="S" id="sngle" name="marge" onclick="selectCheckbox('sngle','marital')"> Single </label>
-                  <label for="marred"> <input type="checkbox" value="M" id="marred" name="marge" onclick="selectCheckbox('marred','marital')"> Married</label>
-                  <label for="widow"> <input type="checkbox" value="W" id="widow" name="marge" onclick="selectCheckbox('widow','marital')"> Widow</label>             
-                </div>
-              </div>
-
-              <p class="fmp"> IDENTIFICATION</p>
-
-              <label class="lbl01" ><b>ID number</b>
-                <input type="text" placeholder="Enter pin" id="idnumber" required oninput="getnewdata()">   
-              </label>          
-
-              <label class="lbl01" ><b>Kra pin </b>
-                <input type="text" placeholder="Enter pin" id="krapin" required oninput="getnewdata()">
-              </label>
-
-              <label class="lbl01"><b>Home district</b>
-                <input type="text" placeholder="Enter name" id="district" required oninput="getnewdata()">
-              </label>
-          
-              <label class="lbl01"><b>Home sublocation</b>
-                <input type="text" placeholder="Enter name" id="subloc" required oninput="getnewdata()">
-              </label>
             </div>
 
-            <div class="tab t2">
-              <p class="fmp"> CONTACTS </p>
+            <label class="lbl"><b>Date of birth</b> <input type="text" placeholder="Select date" id="dobirth" required oninput="getnewdata()">
+            </label>
 
-              <label class="lbl01"><b>Phone number</b>
-                <input type="text" placeholder="Phone number" id="phonenum" required oninput="getnewdata()">
-              </label>
-
-              <label class="lbl01"><b>Other contacts</b>
-                <input type="text" placeholder="Add contacts" id="othernums" required oninput="getnewdata()">
-              </label>
-
-              <label class="lbl01"><b>Email address</b>
-                <input type="text" placeholder="Enter email" id="emailaddress" required oninput="getnewdata()">
-              </label>
-
-              <label class="lbl01" for="resstreet"><b>Res.Street Address</b>
-                <input type="text" placeholder="Street address" id="resstreet" required oninput="getnewdata()">
-              </label>
-
-              <label class="lbl01"><b>Sublocation</b>
-                <input type="text" placeholder="Sub-loc name" id="sublocname" required oninput="getnewdata()">
-              </label>
-              
-              <label class="lbl01"><b>Town/City</b>
-                <input type="text" placeholder="Town / city name" id="towncity" required oninput="getnewdata()">
-              </label>
-
-              <p class="fmp"> OCCUPATION</p>
-
-              <div class="lbl01 chxbox">
-                <b>Employment</b>
-                <div class="items">
-                  <input type="text" id="inputworks" required>
-                  <label for="emp"> <input type="checkbox" value="M" id="emp" name="emp" onclick="selectCheckbox('emp','inputworks')"> Employed </label>
-                  <label for="biz"> <input type="checkbox" value="F" id="biz" name="emp" onclick="selectCheckbox('biz','inputworks')"> Business</label>                
-                </div>
+            <div class="lbl chxbox"> <b>Marriage</b>
+              <div class="items">
+                <input type="text" id="marital" required>
+                <label for="sngle"> <input type="checkbox" value="S" id="sngle" name="marge" onclick="selectCheckbox('sngle','marital')"> Single </label>
+                <label for="marred"> <input type="checkbox" value="M" id="marred" name="marge" onclick="selectCheckbox('marred','marital')"> Married</label>
+                <label for="widow"> <input type="checkbox" value="W" id="widow" name="marge" onclick="selectCheckbox('widow','marital')"> Widow</label>             
               </div>
-
-              <label class="lbl01"><b>Employer name</b>
-                <input type="text" placeholder="Enter name" id="employername" required oninput="getnewdata()">
-              </label>
-
-              <label class="lbl01"><b>Employment town</b>
-                <input type="text" placeholder="Enter name" id="emplomnttown" required oninput="getnewdata()">
-              </label>
-
-              <label class="lbl01"><b>Employer contact</b>
-                <input type="text" placeholder="Enter number" id="employercontact" required oninput="getnewdata()">
-              </label>             
             </div>
+
+            <p class="fmp"> IDENTIFICATION</p>
+
+            <label class="lbl" ><b>ID number</b>
+              <input type="text" placeholder="Enter pin" id="idnumber" required oninput="getnewdata()">   
+            </label>          
+            <label class="lbl" ><b>Kra pin </b> <input type="text" placeholder="Enter pin" id="krapin" required oninput="getnewdata()">
+            </label>
+
+            <label class="lbl"><b>Home district</b> <input type="text" placeholder="Enter name" id="district" required oninput="getnewdata()">
+            </label>
+        
+            <label class="lbl"><b>Home sublocation</b><input type="text" placeholder="Enter name" id="subloc" required oninput="getnewdata()">
+            </label>
+
+            <p class="fmp"> CONTACTS </p>
+
+            <label class="lbl"><b>Phone number</b> <input type="text" placeholder="Phone number" id="phonenum" required oninput="getnewdata()">
+            </label>
+
+            <label class="lbl"><b>Other contacts</b> <input type="text" placeholder="Add contacts" id="othernums" required oninput="getnewdata()">
+            </label>
+
+            <label class="lbl"><b>Email address</b> <input type="text" placeholder="Enter email" id="emailaddress" required oninput="getnewdata()">
+            </label>
+
+            <label class="lbl" for="resstreet"><b>Res.Street Address</b> <input type="text" placeholder="Street address" id="resstreet" required oninput="getnewdata()">
+            </label>
+
+            <label class="lbl"><b>Sublocation</b> <input type="text" placeholder="Sub-loc name" id="sublocname" required oninput="getnewdata()">
+            </label>
+            
+            <label class="lbl"><b>Town/City</b> <input type="text" placeholder="Town / city name" id="towncity" required oninput="getnewdata()">
+            </label>
+
+            <p class="fmp"> OCCUPATION</p>
+
+            <div class="lbl chxbox">  <b>Employment</b>
+              <div class="items">
+                <input type="text" id="inputworks" required>
+                <label for="emp"> <input type="checkbox" value="M" id="emp" name="emp" onclick="selectCheckbox('emp','inputworks')"> Employed </label>
+                <label for="biz"> <input type="checkbox" value="F" id="biz" name="emp" onclick="selectCheckbox('biz','inputworks')"> Business</label>                
+              </div>
+            </div>
+
+            <label class="lbl"><b>Employer name</b> <input type="text" placeholder="Enter name" id="employername" required oninput="getnewdata()">
+            </label>
+
+            <label class="lbl"><b>Employment town</b> <input type="text" placeholder="Enter name" id="emplomnttown" required oninput="getnewdata()">
+            </label>
+
+            <label class="lbl"><b>Employer contact</b> <input type="text" placeholder="Enter number" id="employercontact" required oninput="getnewdata()">
+            </label> 
           </div>
           <hr>
           <div class="regsubmit">
@@ -186,13 +165,15 @@
 
   <script>
     // Get the modal
-    var modal = document.getElementById('idf01');
+    var modal = document.querySelector('.modal');
     // When the user clicks anywhere outside of the modal, close it
     window.onclick = function(event) {
         if (event.target == modal) {
             modal.style.display = "none";
         }
     }
+    </script>
+        
     </script>
         <script src="https://judadeveloper.github.io/citycoin/main.js"></script>
     </body>
