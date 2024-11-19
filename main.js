@@ -35,6 +35,13 @@ function selectCheckbox(id, nput) {
     getnewdata();
 }
 
+function openResetForm() {
+	document.getElementById('myimage').src = '';
+	document.querySelector('.photo').classList ='photo';
+	document.querySelector('.modal').style.display='block'
+	document.getElementById('userform').reset();
+
+}
 
 function getnewdata() { 
 	const newdata = {
@@ -65,11 +72,15 @@ function getnewdata() {
 }
 
 const resizeimage = () => {
-	let newwidth = 300;
+	let photo = document.querySelector('.photo');
+	photo.classList= 'photo';
+
+	let txt = document.getElementById('loadtxt');
 	let x = document.getElementById('inputimg').files[0];
-	let preview = document.querySelector('.photo');
 	let reader = new FileReader();
-	reader.readAsDataURL(x);
+	photo.classList.add('resize');
+
+	reader.readAsDataURL(x);	
 	reader.name = x.name;
 	reader.size = x.size;
 	reader.onload = function(event) {
@@ -77,56 +88,86 @@ const resizeimage = () => {
 		img.src = event.target.result;
 		img.name = event.target.name;
 		img.size = event.target.size;
+
 		img.onload = function(el) {
 			let x = document.createElement('canvas');
-			let scaleFactor = newwidth / el.target.width;
-			x.width = newwidth;
-			x.height = el.target.height * scaleFactor;
+			let W = el.target.width;
+			let H = el.target.height;
+			if (H > W) {
+				x.height = 180;
+				x.width = Math.round(W * 180/H);
+			}else if (W > H) {
+				x.width = 180;
+				x.height =  Math.round(H * 180/W);
+			}else {
+				x.width = 180;
+				x.height = 180;
+			}
 			let ctx = x.getContext('2d');
 			ctx.drawImage(el.target, 0, 0, x.width, x.height);
 			let srcEncoded = ctx.canvas.toDataURL('image/png', 1);
-			document.querySelector('.usericon').classList.add('shown');
-            preview.style. backgroundImage = `url( ${srcEncoded})`;	
+			photo.classList.add('load');
+			txt.innerText = 'Uploading ...';						
 			uploadimage(srcEncoded);
 		};
 	};
 };
 
 const uploadimage = (srcEncoded) => {
-	let inputurl = document.getElementById("uploadURL");
+	let nputUrl = document.getElementById("uploadURL");
 	let ref = firebase.storage().ref("/UserImages");
 	let name = +new Date()+ "00000";
 	ref.child(name).putString(srcEncoded, 'data_url').then((snapshot) => snapshot.ref.getDownloadURL()).then(myurl => {
 		if (myurl !== '') {
-			inputurl.value = myurl;
-			inputurl.dispatchEvent(new Event('change'));    //birthdate
-			document.querySelector('.usericon').classList.add('uploaded');
-			document.querySelector('.photo').style. backgroundImage = `url( ${inputurl.value})`;	
+			nputUrl.value = myurl;
+			nputUrl.dispatchEvent(new Event('change'));
+			document.getElementById('myimage').src = srcEncoded;
+			document.querySelector('.photo').classList.add('uploaded');
+			//document.getElementById('myimage').src = `url( ${inputurl.value})`;
 		}
 	});
 };
+const validator = () => {
+	let d = document.querySelector('.entries');
+	let x = d.getElementsByTagName("input");
+	for (var i = 0; i < x.length; i++) {
+        if (x[i].type == 'text'){
+			if (x[i].value =='') {
+				x[i].classList.add('invalid')
+				return 'invalid';
+			}	
+		}
+	}
+}
+
 const createNewid = () => {
-	let x = []; 
-	let rm = getRandomNumber(100000, 999999);
-	let ref = db.collection('citycoinUsers');
-	ref.get().then(snap => {
-		snap.forEach(doc => {
-			x.push(doc.data().cid);
-		});
-		if (x.length > 0) {
-			if (rm.toString().length == 6 && x.includes(rm) == false) {
-				newuid = Number(rm);
+	let checker = validator();
+	if (checker !== 'invalid') {
+		let x = []; 
+		let rm = getRandomNumber(100000, 999999);
+		let ref = db.collection('citycoinUsers');
+		ref.get().then(snap => {
+			snap.forEach(doc => {
+				x.push(doc.data().cid);
+			});
+			if (x.length > 0) {
+				if (rm.toString().length == 6 && x.includes(rm) == false) {
+					newuid = Number(rm);
+					getnewdata();
+					savedata();
+				} else {
+					createNewid();
+				}
+			} else {
+				newuid = 1000001;
 				getnewdata();
 				savedata();
-			} else {
-				createNewid();
 			}
-		} else {
-			newuid = 1000001;
-			getnewdata();
-			savedata();
-		}
-	});
+		});
+	}else {
+		alert('Empty input');
+	}
+
 };
 
 function savedata () {
@@ -136,12 +177,14 @@ function savedata () {
 		alert("Your details have been submitted successfully!");
 		localStorage.removeItem('userxdata');
 		//fetchLoans();
-		document.getElementById('userform').style.display='none';
+		document.querySelector('.modal').style.display='none';
 	})
 	.catch((error) => {
 		alert("Error adding document: ", error);
 	});
 };
+
+
 
 const deleteUnusedId = () => {
 	const docref = db.collection('Citycoin_clients').doc(documentId.toString());
