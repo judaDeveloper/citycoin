@@ -376,7 +376,7 @@ a {
 }
 
 /* Add Zoom Animation */
-.animated {
+.animate {
   -webkit-animation: animatezoom 0.6s;
   animation: animatezoom 0.6s
 }
