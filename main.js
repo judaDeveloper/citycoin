@@ -726,3 +726,4 @@ function open_forms(fm) {
     }
   }
 }
+        netxt_tab(1);
