@@ -43,7 +43,7 @@ firebase.firestore().enablePersistence()
 	Current Form 
 ----------------*/
 let current_tab = 0;
-let current_form = document.createElement("form");
+let current_form = document.createElement("newclient");
 
 /*===================
   Client Form Inputs
