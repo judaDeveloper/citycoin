@@ -1,24 +1,84 @@
 @-moz-keyframes growdown {
-  0% {  transform: scaleY(0);}
-  80% {  transform: scaleY(1.1);  }
-  100% {  transform: scaleY(1);  }
+  0% {
+    transform: scaleY(0);
+  }
+  80% {
+    transform: scaleY(1.1);
+  }
+  100% {
+    transform: scaleY(1);
+  }
 }
 @-webkit-keyframes growdown {
-  0% {  transform: scaleY(0);  }
-  80% {  transform: scaleY(1.1);  }
-  100% {   transform: scaleY(1);  }
+  0% {
+    transform: scaleY(0);
+  }
+  80% {
+    transform: scaleY(1.1);
+  }
+  100% {
+    transform: scaleY(1);
+  }
 }
 @-o-keyframes growdown {
-  0% {    transform: scaleY(0);  }
-  80% {    transform: scaleY(1.1);  }
-  100% {    transform: scaleY(1);  }
+  0% {
+    transform: scaleY(0);
+  }
+  80% {
+    transform: scaleY(1.1);
+  }
+  100% {
+    transform: scaleY(1);
+  }
 }
 @keyframes growdown {
-  0% {  transform: scaleY(0);  }
-  80% {  transform: scaleY(1.1);  }
-  100% {  transform: scaleY(1);  }
+  0% {
+    transform: scaleY(0);
+  }
+  80% {
+    transform: scaleY(1.1);
+  }
+  100% {
+    transform: scaleY(1);
+  }
+}
+* {
+  margin: 0;
+  padding: 0;
+  outline: none;
+  border: none;
+  font-size: 13px;
+  box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  scroll-behavior: smooth;
+  font-family: "Roboto", system-ui, -apple-system, "Segoe UI", Roboto,
+    "Helvetica Neue", Arial, "Noto Sans", "Liberation Sans", sans-serif,
+    "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+}
+/*
+  Smooth scroll
+*/
+:root {
+  scroll-behavior: smooth;
 }
 
+body {
+  display: grid;
+  height: 100vh;
+  overflow: hhidden;
+  background-color: #ffffff;
+  grid-template-columns: 1fr;
+}
+#Main {
+  width: 100%;
+  height: 100%;
+  display: grid;
+  margin: 0 auto;
+  max-width: 1420px;
+  position: relative;
+  padding: 3px 5px 5px 5px;
+}
 .modal {
   width: 100%;
   height: 100%;
@@ -28,8 +88,16 @@
   position: absolute;
   grid-template-rows: 1fr;
   padding: 3px 5px 5px 5px;
+  display: enone;
+
+  &:has(form.shown) {
+    display: grid;
+    .forms {
+      display: grid;
+    }
+  }
 }
-.podal {
+.md {
   width: 100%;
   padding: 80px 5px;
   background-color: #00000083;
@@ -43,6 +111,7 @@
   border-radius: 5px;
   background-color: #ececec;
   grid-template-rows: 30px minmax(400px, 1fr) 70px;
+  display: enone;
 
   .heada {
     width: 100%;
@@ -73,12 +142,11 @@
       background-color: #ffffff;
       scale: 110%;
       box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1),
-      0 1px 2px -1px rgba(0, 0, 0, 0.1);
+        0 1px 2px -1px rgba(0, 0, 0, 0.1);
 
       &:hover {
         fill: #ff0000;
         background-color: #ffffff;
-
       }
     }
   }
@@ -88,8 +156,10 @@
     padding: 0px 15px;
     padding-bottom: 20px;
     background-color: #00000000;
+    &.shown {
+      display: grid;
+    }
 
-    
     table {
       width: 100%;
       min-height: 380px;
@@ -102,7 +172,7 @@
         display: none;
         align-content: start;
         &.shown {
-          display:grid;
+          display: grid;
         }
 
         .tabname {
@@ -117,9 +187,15 @@
 }
 
 @keyframes tab_animate {
-  0% {  transform: scaleX(0);  }
-  80% {  transform: scaleX(1.1);  }
-  100% {  transform: scaleX(1);  }
+  0% {
+    transform: scaleX(0);
+  }
+  80% {
+    transform: scaleX(1.1);
+  }
+  100% {
+    transform: scaleX(1);
+  }
 }
 
 .lbl {
@@ -132,7 +208,8 @@
   margin-bottom: 12px;
   background-color: #ffffff;
   grid-template-columns: 50px 1fr;
-  box-shadow: rgba(0, 0, 0, 0.1) 0px 0px 5px 0px, rgba(0, 0, 0, 0.1) 0px 0px 1px 0px;
+  box-shadow: rgba(0, 0, 0, 0.1) 0px 0px 5px 0px,
+    rgba(0, 0, 0, 0.1) 0px 0px 1px 0px;
 
   &:hover {
     .con {
@@ -187,11 +264,83 @@
   }
 }
 
-.lbl.txt_a {
+.lbl.txt b {
   height: fit-content;
   .nput {
     height: 80px;
   }
+}
+.lbl.cbox,
+.lbl.dob {
+  grid-template-columns: 50px 1fr;
+
+  span {
+    top: 0px;
+    left: 65px;
+    font-size: 12px;
+    color: #999999;
+    position: absolute;
+    pointer-events: none;
+  }
+  input[type="text"] {
+    padding: 0;
+    font-size: 0px;
+    pointer-events: none;
+    background-color: #ffffff00;
+  }
+
+  .box {
+    top: 0px;
+    left: 50px;
+    display: grid;
+    height: 100%;
+    column-gap: 5%;
+    padding-left: 15px;
+    position: absolute;
+    width: calc(100% - 52px);
+
+    label {
+      display: grid;
+      cursor: pointer;
+      font-size: 14px;
+      margin-top: 10px;
+      padding-bottom: 5px;
+      align-items: center;
+      padding: 5px 0px 0px 0px;
+      grid-template-columns: 25px 1fr;
+
+      input[type="checkbox"] {
+        width: 15px;
+        height: 15px;
+        cursor: pointer;
+      }
+      &:hover {
+        color: #008cff;
+        font-weight: bold;
+      }
+    }
+  }
+  input[type="button"] {
+    height: 25px;
+    cursor: pointer;
+    margin-top: 15px;
+    border-radius: 2px;
+    background-color: #f3f3f39f;
+
+    &:hover {
+      color: #008cff;
+      font-weight: bold;
+    }
+  }
+}
+
+.lbl.dob input[type="text"] {
+  position: absolute;
+  width: 100px;
+  height: 25px;
+  
+  color: #c5ced6;
+  background-color: #008cff;
 }
 
 .lbl.docs {
@@ -213,7 +362,8 @@
       text-align: center;
       grid-template-rows: 1fr 18px;
       background-color: #ffffff;
-      box-shadow: rgba(0, 0, 0, 0.1) 0px 0px 5px 0px, rgba(0, 0, 0, 0.1) 0px 0px 1px 0px;
+      box-shadow: rgba(0, 0, 0, 0.1) 0px 0px 5px 0px,
+        rgba(0, 0, 0, 0.1) 0px 0px 1px 0px;
 
       span {
         font-size: 12px;
@@ -278,9 +428,17 @@
 }
 
 .lbl:has(.nput.invalid) {
-  .con {  svg { fill: #f86464;  } }
-  .pod { color: #f86464;}
-  .nput {  border: 1px solid #ff686885;  }
+  .con {
+    svg {
+      fill: #f86464;
+    }
+  }
+  .pod {
+    color: #f86464;
+  }
+  .nput {
+    border: 1px solid #ff686885;
+  }
 
   &.cbox,
   &.dob {
@@ -340,12 +498,11 @@ form:has(.nput#imageurl.invalid) {
   &.cbox,
   &.dob {
     .nput {
-      font-size: 0px;
-      color: #00000000;
+      font-size: 13px;
+      color: #ff3d3d;
     }
   }
 }
-
 
 label.imge {
   width: 100%;
@@ -440,71 +597,6 @@ label.imge {
   }
 }
 
-.lbl.cbox,
-.lbl.dob {
-  background-color: #ffffff;
-  grid-template-columns: 50px 1fr;
-
-  span {
-    top: 0px;
-    left: 65px;
-    font-size: 12px;
-    color: #999999;
-    position: absolute;
-    pointer-events: none;
-  }
-  input[type="text"] {
-    padding: 0;
-    font-size: 0px;
-    pointer-events: none;
-    background-color: #ffffff00;
-  }
-
-  .box {
-    top: 0px;
-    left: 50px;
-    display: grid;
-    height: 100%;
-    column-gap: 5%;
-    padding-left: 15px;
-    position: absolute;
-    width: calc(100% - 52px);
-
-    label {
-      display: grid;
-      cursor: pointer;
-      font-size: 14px;
-      margin-top: 10px;
-      padding-bottom: 5px;
-      align-items: center;
-      padding: 5px 0px 0px 0px;
-      grid-template-columns: 25px 1fr;
-
-      input[type="checkbox"] {
-        width: 15px;
-        height: 15px;
-        cursor: pointer;
-      }
-      &:hover {
-        color: #008cff;
-        font-weight: bold;
-      }
-    }
-  }
-
-  input[type="button"] {
-    height: 25px;
-    cursor: pointer;
-    margin-top: 15px;
-    border-radius: 2px;
-    background-color: #f3f3f39f;
-
-    &:hover {
-      color: #008cff;
-      font-weight: bold;
-    }
-  }
-}
 
 .submit {
   display: grid;
@@ -513,7 +605,7 @@ label.imge {
   padding: 13px 20px;
   justify-content: center;
   background-color: #d1d1d1;
-  border-radius: 0px 0px 3px 3px;  
+  border-radius: 0px 0px 3px 3px;
   grid-template-columns: minmax(80px, 25%) minmax(140px, 25%);
 
   button.btn {
@@ -553,5 +645,3 @@ label.imge {
     }
   }
 }
-
-
