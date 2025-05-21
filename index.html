@@ -17,11 +17,9 @@
         <title>city coin</title>
     </head>
     <body>
-
-     <div id="Main">
-      <div class="modal">
-        <div class="podal">
-
+        <div id="Main">
+                  <div class="modal">
+        <div class="md">
           <div class="forms">
             <div class="heada">
               <p>REGISTRATION</p>
@@ -37,7 +35,7 @@
                 />
               </svg>
             </div>
-
+            
             <form action="" id="newclient">
               <label class="imge" for="inputimage">
                 <input
@@ -51,9 +49,9 @@
                 <img src="" alt="" id="imgpreview" />
               </label>
               <table>
-                <td>
+                <td class="shown">
                   <p class="tabname">Basic info</p>
-                  <label class="lbl" for="fname">
+                  <label class="lbl txt" for="fname">
                     <p class="con">
                       <svg viewbox="0 0 16 16">
                         <path
@@ -72,7 +70,7 @@
                     />
                   </label>
 
-                  <label class="lbl" for="sname">
+                  <label class="lbl txt" for="sname">
                     <p class="con">
                       <svg viewbox="0 0 16 16">
                         <path
@@ -91,7 +89,7 @@
                     />
                   </label>
 
-                  <label class="lbl" for="lname">
+                  <label class="lbl txt" for="lname">
                     <p class="con">
                       <svg viewbox="0 0 16 16">
                         <path
@@ -179,9 +177,9 @@
                     <input
                       type="text"
                       id="dateob"
-                      class="nput"
+                      class="ndob"
                       placeholder=""
-                      oninput="this.className='nput'"
+                      oninput="this.className='ndob'"
                     />
                   </label>
 
@@ -239,7 +237,7 @@
 
                 <td>
                   <p class="tabname">Contact</p>
-                  <label class="lbl" for="idnumber">
+                  <label class="lbl txt" for="idnumber">
                     <p class="con">
                       <svg viewbox="0 0 16 16">
                         <path
@@ -264,7 +262,7 @@
                     />
                   </label>
 
-                  <label class="lbl" for="emailinput">
+                  <label class="lbl txt" for="emailinput">
                     <p class="con">
                       <svg viewbox="0 0 16 16">
                         <path
@@ -286,7 +284,7 @@
                     />
                   </label>
 
-                  <label class="lbl" for="krapin">
+                  <label class="lbl txt" for="krapin">
                     <p class="con">
                       <svg viewbox="0 0 16 16">
                         <path d="M8 9.05a2.5 2.5 0 1 0 0-5 2.5 2.5 0 0 0 0 5" />
@@ -308,7 +306,7 @@
                     />
                   </label>
 
-                  <label class="lbl" for="mobnumber1">
+                  <label class="lbl txt" for="phonenum1">
                     <p class="con">
                       <svg viewbox="0 0 16 16">
                         <path
@@ -322,7 +320,7 @@
                     <input
                       class="nput"
                       type="text"
-                      id="mobnumber1"
+                      id="phonenum1"
                       placeholder=""
                       minlength="10"
                       maxlength="10"
@@ -331,7 +329,7 @@
                     />
                   </label>
 
-                  <label class="lbl" for="mobnumber2">
+                  <label class="lbl txt" for="phonenum2">
                     <p class="con">
                       <svg viewbox="0 0 16 16">
                         <path
@@ -348,7 +346,7 @@
                     <input
                       class="nput"
                       type="text"
-                      id="mobnumber2"
+                      id="phonenum2"
                       placeholder=""
                       minlength="10"
                       maxlength="10"
@@ -357,7 +355,7 @@
                     />
                   </label>
 
-                  <label class="lbl" for="mobnumber3">
+                  <label class="lbl txt" for="phonenum3">
                     <p class="con">
                       <svg viewbox="0 0 16 16">
                         <path
@@ -374,7 +372,7 @@
                     <input
                       class="nput"
                       type="text"
-                      id="mobnumber3"
+                      id="phonenum3"
                       placeholder=""
                       minlength="10"
                       maxlength="10"
@@ -384,9 +382,9 @@
                   </label>
                 </td>
 
-                <td>
+                <td class="shown">
                   <p class="tabname">Address</p>
-                  <label class="lbl" for="county">
+                  <label class="lbl drod" for="county">
                     <p class="con">
                       <svg viewbox="0 0 16 16">
                         <path
@@ -410,7 +408,7 @@
                     <ul class="dropdwn" id="counties"></ul>
                   </label>
 
-                  <label class="lbl" for="town">
+                  <label class="lbl drod" for="town">
                     <p class="con">
                       <svg viewbox="0 0 16 16">
                         <path
@@ -434,7 +432,7 @@
                     <ul class="dropdwn" id="towns"></ul>
                   </label>
 
-                  <label class="lbl" for="subcounty">
+                  <label class="lbl drod" for="subcounty">
                     <p class="con">
                       <svg viewbox="0 0 16 16">
                         <path
@@ -455,7 +453,7 @@
                     <ul class="dropdwn" id="subcounties"></ul>
                   </label>
 
-                  <label class="lbl" for="sublocation">
+                  <label class="lbl drod" for="sublocation">
                     <p class="con">
                       <svg viewbox="0 0 16 16">
                         <path
@@ -479,7 +477,7 @@
                     <ul class="dropdwn" id="sublocations"></ul>
                   </label>
 
-                  <label class="lbl txt_a" for="physical_address">
+                  <label class="lbl txt b" for="physical_address">
                     <p class="con">
                       <svg viewbox="0 0 16 16">
                         <path
@@ -503,7 +501,7 @@
 
                 <td>
                   <p class="tabname">Next of kin</p>
-                  <label class="lbl" for="nok_name">
+                  <label class="lbl txt" for="nok_name">
                     <p class="con">
                       <svg viewbox="0 0 16 16">
                         <path
@@ -522,7 +520,7 @@
                     />
                   </label>
 
-                  <label class="lbl" for="nok_relation">
+                  <label class="lbl drod" for="nok_relation">
                     <p class="con">
                       <svg viewbox="0 0 16 16">
                         <path
@@ -546,7 +544,7 @@
                     <ul class="dropdwn" id="nok_relations"></ul>
                   </label>
 
-                  <label class="lbl" for="nok_town">
+                  <label class="lbl drod" for="nok_town">
                     <p class="con">
                       <svg viewbox="0 0 16 16">
                         <path
@@ -570,7 +568,7 @@
                     <ul class="dropdwn" id="nok_towns"></ul>
                   </label>
 
-                  <label class="lbl txt_a" for="nok_area">
+                  <label class="lbl txt b" for="nok_area">
                     <p class="con">
                       <svg viewbox="0 0 16 16">
                         <path
@@ -591,7 +589,7 @@
                     ></textarea>
                   </label>
 
-                  <label class="lbl" for="nok_contact">
+                  <label class="lbl txt" for="nok_contact">
                     <p class="con">
                       <svg viewbox="0 0 16 16">
                         <path
@@ -662,7 +660,7 @@
                     />
                   </label>
 
-                  <label class="lbl" for="w_name">
+                  <label class="lbl txt" for="w_name">
                     <p class="con">
                       <svg viewbox="0 0 16 16">
                         <path
@@ -684,7 +682,7 @@
                     />
                   </label>
 
-                  <label class="lbl" for="w_type">
+                  <label class="lbl drod" for="w_type">
                     <p class="con">
                       <svg viewbox="0 0 16 16">
                         <path
@@ -708,7 +706,7 @@
                     <ul class="dropdwn" id="w_types"></ul>
                   </label>
 
-                  <label class="lbl" for="w_town">
+                  <label class="lbl drod" for="w_town">
                     <p class="con">
                       <svg viewbox="0 0 16 16">
                         <path
@@ -732,7 +730,7 @@
                     <ul class="dropdwn" id="w_towns"></ul>
                   </label>
 
-                  <label class="lbl" for="w_contact">
+                  <label class="lbl txt" for="w_contact">
                     <p class="con">
                       <svg viewbox="0 0 16 16">
                         <path
@@ -796,7 +794,6 @@
                     </div>
                   </label>
                 </td>
-
               </table>
             </form>
 
@@ -805,12 +802,9 @@
               <button class="btn" onclick="validateEmpties()">NEXT</button>
             </div>
           </div>
-
-
         </div>
       </div>
-
-    </div>
+        </div>
 
         
     </script>
