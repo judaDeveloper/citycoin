@@ -1,4 +1,4 @@
- /*==================
+/*==================
  FIREBASE API CONFIG
 =====================*/
 const firebaseConfig = {
@@ -39,11 +39,43 @@ firebase.firestore().enablePersistence()
 });
 
 
-/*==============
-	Current Form 
-----------------*/
-let current_tab = 0;
-let current_form = document.createElement("newclient");
+
+var appdata = { 
+    users: [], 
+    loans: [],
+    payments: [],
+};
+
+/* ===========
+FETCH USERS
+==============*/
+const fetchusers = () => {
+    let obj = {};
+db.collection("cc_userdata").where("cid", "!=", '')
+.onSnapshot({ includeMetadataChanges: true }, (snapshot) => {
+    snapshot.docChanges().forEach((change) => {
+        obj[change.doc.id] = change.doc.data();
+        appdata.users = Object.values(obj);
+    });
+
+});
+};fetchusers();
+
+
+/* ==========
+FETCH LOANS
+=============*/
+
+const fetchloans = () => {
+    let ob_j = {};
+    db.collection("cc_loans").where("lid", "!=", '').onSnapshot({ includeMetadataChanges: true }, (snapshot) => {
+    snapshot.docChanges().forEach((change) => {
+        ob_j[change.doc.id] = change.doc.data();
+        appdata.loans = Object.values(ob_j);
+    });
+});
+};fetchloans();
+
 
 /*===================
   Client Form Inputs
@@ -51,7 +83,7 @@ let current_form = document.createElement("newclient");
 let fname = document.getElementById("fname");
 let sname = document.getElementById("sname");
 let lname = document.getElementById("lname");
-let dateob = document.getElementById("dateob");
+let dobirth = document.getElementById("dateob");
 let gender = document.getElementById("genda");
 let marital = document.getElementById("marital");
 let imageurl = document.getElementById("imageurl");
@@ -59,9 +91,9 @@ let imageurl = document.getElementById("imageurl");
 let idnum = document.getElementById("idnumber");
 let krapin = document.getElementById("krapin");
 let email = document.getElementById("emailinput");
-let mobno1 = document.getElementById("mobnumber1");
-let mobno2 = document.getElementById("mobnumber2");
-let mobno3 = document.getElementById("mobnumber3");
+let mobno1 = document.getElementById("phonenum1");
+let mobno2 = document.getElementById("phonenum2");
+let mobno3 = document.getElementById("phonenum3");
 
 let county = document.getElementById("county");
 let currtown = document.getElementById("town");
@@ -81,17 +113,19 @@ let nok_town = document.getElementById("nok_town");
 let nok_area = document.getElementById("w_town");
 let nok_tel = document.getElementById("nok_contact");
 
-/*=========================
-	Current Form DropLists
---------------------------*/
-let currentdropList = document.createElement("ul");
-let dropdowns = current_form.querySelectorAll(".dropdwn");
 
-/*=========================
-	Current Inputs/Dropdowns
---------------------------*/
-let currentInput = document.createElement("input");
-let currentInputs = current_form.querySelectorAll(".lbl .nput");
+let current_tab = 0;  // Current Tab 
+//let current_form = document.createElement("form"); // Current Form
+let current_form = document.getElementById("newclient"); // Current Form
+
+let textinputs = current_form.querySelectorAll(".lbl.txt .nput");   //selects all text Inputs
+let dropdowninputs = current_form.querySelectorAll(".lbl.drod .nput");  //selects all dropdown Inputs
+let checkboxes = current_form.querySelectorAll(".lbl.cbox .nput");  //selects all checkbox Inputs
+let current_input = document.createElement("input");
+
+let dropdownlists = current_form.querySelectorAll(".dropdwn");  //selects all droplists
+let currentdropList = document.createElement("ul");  //  gets current droplists
+
 
 /*====================
 	Get Years List
@@ -115,6 +149,7 @@ const getmonthDays = (mon, yr) => {
   }
   return list;
 };
+
 /*====================
 	Age Calculator
 ----------------------*/
@@ -162,7 +197,7 @@ function onecheckBox(cbox) {
       if (x[i].checked === true) {
         nput.value = x[i].value;
         nput.dispatchEvent(new Event("input"));
-      }else {
+      } else {
         nput.value = "";
         nput.dispatchEvent(new Event("input"));
       }
@@ -172,7 +207,6 @@ function onecheckBox(cbox) {
   }
   nput.dispatchEvent(new Event("change"));
 }
-
 
 /*====================
 	GET Random Numbers
@@ -200,21 +234,21 @@ let monthlist = [
   "Nov",
   "Dec",
 ];
+
 /*====================
 	 Fetch Data Lists
 ----------------------*/
-const Arraylists = (list) => {
+const getListdata = (list) => {
   let x = [];
   if (list == "days") {
-    if (dateob.value !== "") {
-      let dt = new Date(dateob.value);
-      x = getmonthDays(dt.getUTCMonth() + 1, dt.getUTCFullYear());
+    let dt = new Date();
+    let db = dobirth.value.toString();
+    if (db !== "") {
+      dt = new Date(db);
     } else {
-      x = getmonthDays(
-        new Date().getUTCMonth() + 1,
-        new Date().getUTCFullYear()
-      );
+      dt = new Date();
     }
+    x = getmonthDays(dt.getUTCMonth() + 1, dt.getUTCFullYear());
   } else if (list == "months") {
     x = monthlist;
   } else if (list == "years") {
@@ -254,18 +288,19 @@ const Arraylists = (list) => {
   } else if (list == "clients") {
     x = appdata.users.filter((item) => item.clss == "client");
   }
+
   return x;
 };
 
 /*====================
  Dropdown Static Data
 ----------------------*/
-let static_inputs = document.querySelectorAll(
+let staticInputs = document.querySelectorAll(
   "#county, #town, #subcounty, #sublocation, #w_type, #w_town, #nok_town"
 );
-static_inputs.forEach((input) => {
+staticInputs.forEach((input) => {
   if (input.name !== "") {
-    let x = Arraylists(input.name);
+    let x = getListdata(input.name); // use input name to filter data and find list
     let list = document.getElementById(input.name);
     let r = document.createDocumentFragment();
     for (let i = 0; i < x.length; i++) {
@@ -281,26 +316,24 @@ static_inputs.forEach((input) => {
 /*====================
  Dropdown Dynamic Data
 ----------------------*/
-const dynamic_data = (input, list) => {
-  if (input) {
-    let x = Arraylists(input.id);
-    let grid = document.createElement("ul");
-    grid.id;
-    let r = document.createDocumentFragment();
+const dynamicData = (input, list) => {
+  if (input.id) {
+    let x = getListdata(input.id); // use input id to filter data
+    let f = document.createDocumentFragment();
     for (let i = 0; i < x.length; i++) {
       let li = document.createElement("li");
       li.dataset.data = JSON.stringify(x[i]);
       li.innerHTML = "<p>" + x[i] + "</p>";
-      r.appendChild(li);
+      f.appendChild(li);
     }
-    list.replaceChildren(r);
+    list.replaceChildren(f);
   }
 };
 
 /*====================
  Form Inputs Clicked
 ----------------------*/
-function set_newPosition(input) {
+function newposition(input) {
   let ol = input.offsetLeft;
   let ow = input.offsetWidth;
   let ot = input.offsetTop;
@@ -318,23 +351,22 @@ function set_newPosition(input) {
   }
 }
 
+
+
+// Dropdown Lists
 function showHide(disp) {
   if (disp == "" || disp == "none") {
-    set_newPosition(currentInput);
+    newposition(current_input);
   } else {
     currentdropList.style.display = "none";
   }
 }
 
-/*====================
- Form Inputs Clicked
-----------------------*/
-currentInputs.forEach((input) => {
+dropdowninputs.forEach((input) => {  // show dropdown lists
   input.addEventListener("click", function () {
-    currentInput = this;
-    let elem_name = this.name;
-    if (elem_name) {
-      currentdropList = this.parentElement.querySelector("#" + elem_name);
+    current_input = this;
+    if (this.name) {
+      currentdropList = this.parentElement.querySelector("#" + this.name);
       let disp = currentdropList.style.display;
       showHide(disp);
     }
@@ -342,13 +374,12 @@ currentInputs.forEach((input) => {
 });
 
 
-
 /*===============================
  Close dropLists on window click
 --------------------------------*/
 window.addEventListener("mouseup", function (e) {
-  dropdowns.forEach((item) => {
-    if (!e.target.closest(".dropdwn") && !(e.target == currentInput)) {
+  dropdownlists.forEach((item) => {
+    if (!e.target.closest(".dropdwn") && !(e.target == current_input)) {
       item.style.display = "none";
     }
   });
@@ -361,76 +392,74 @@ let days = document.getElementById("days");
 let months = document.getElementById("months");
 let years = document.getElementById("years");
 
-function fetchdates(d0, m0, y0) {
+function fetchdates(dx, mx, yx) {
   let dt = new Date();
   let d = dt.getDate();
   let m = dt.getMonth();
   let y = dt.getFullYear();
-  
-  if (d0.value !== "DD" && m0.value !== "MM" && y0.value !== "YY") {
-    d = parseInt(d0.value);
-    m = monthlist.indexOf(m0.value);
-    y = parseInt(y0.value);
+
+  if (dx.value !== "DD" && mx.value !== "MM" && yx.value !== "YY") {
+    d = parseInt(dx.value);
+    m = monthlist.indexOf(mx.value);
+    y = parseInt(yx.value);
     dt.setDate(d);
     dt.setMonth(m);
     dt.setFullYear(y);
-    dateob.value = dt;
-    dateob.dataset.age = CalculatorAge(dt);
-    dateob.dispatchEvent(new Event("input"));
+    dobirth.value = dt.toString();
+    dobirth.dataset.age = CalculatorAge(dt);
+    dobirth.dispatchEvent(new Event("input"));
   }
-  if (dateob.value) {;  
-    dt = new Date(dateob.value.toString());
+  let mydate = dobirth.value.toString();
+  if (mydate !== "") {
+    dt = new Date(mydate);
     d = dt.getDate();
     m = dt.getMonth();
     y = dt.getFullYear();
-    days.value = d;
+    days.value = d.toString();
     months.value = monthlist[m];
     years.value = y;
   }
-}; fetchdates(days, months, years);
+} //fetchdates(days, months, years);
 
 /*====================
  Dates Inputs Clicked
 ----------------------*/
-let dates_inputs = document.querySelectorAll("#days, #months, #years");
-dates_inputs.forEach((input) => {
-  input.addEventListener("click", function () {
-    currentInput = this;
-    let elem_id = this.id;
-    let elem_name = this.name;
-    if (elem_name) {
-      currentdropList = current_form.querySelector("#" + elem_name);
-      let disp = currentdropList.style.display;
-      if (elem_id == "days" || elem_id == "months" || elem_id == "years") {
-        dynamic_data(currentInput, currentdropList);
+let dateinputs = document.querySelectorAll("#days, #months, #years");
+dateinputs.forEach((nput) => {
+  nput.addEventListener("click", function () {
+    currentdropList = document.getElementById("dates");
+    let disp = currentdropList.style.display;
+    if (nput === current_input) {
+      if (disp !== "" && disp !== "none") {
+        currentdropList.style.display = "none";
+      } else {
+        currentdropList.style.display = "grid";
       }
-      showHide(disp);
+    } else {
+      current_input = this;
+      newposition(current_input); // set position & show dropdown
     }
+    dynamicData(current_input, currentdropList); // load dropdown data
   });
-  input.addEventListener("input", function () {
-    fetchdates(days, months, years);
-  });
-
 });
 
 /*==============================
  Vissible Dropdown List Clicked
 -------------------------------*/
-dropdowns.forEach((item) => {
+dropdownlists.forEach((item) => {
   item.addEventListener("click", (e) => {
     let li = e.target.closest("li");
     let txt = li.innerText.replace(/\s/g, "");
     let data = JSON.parse(li.dataset.data);
-    currentInput.dataset.id = data;
-    currentInput.value = txt;
+    current_input.dataset.id = data;
+    current_input.value = txt;
 
-    let id = currentInput.id;
+    let id = current_input.id;
     if (id == "days" || id == "months" || id == "years") {
-      //fetchDates(days, months, years);
       fetchdates(days, months, years);
       document.getElementById("dates").style.display = "none";
     }
-    currentInput.dispatchEvent(new Event("input"));
+    current_input.dispatchEvent(new Event("input"));
   });
   item.style.display = "none";
 });
@@ -494,43 +523,43 @@ const imageurlChanged = (input) => {
 };
 imageurlChanged(imageurl);
 
-  /*=====================
+/*=====================
   Fetch Form Data
 -----------------------*/
-  function newuserdata(cid) {
-    let fxname = setfullname().toLowerCase();
-    //fxnames.innerText = fxname.replace(/\b\w/g, (s) => s.toUpperCase());
+function newuserdata(cid) {
+  let fxname = setfullname().toLowerCase();
+  //fxnames.innerText = fxname.replace(/\b\w/g, (s) => s.toUpperCase());
 
-    const newdata = {
-      cid: cid.toString(),
-      clss: "client",
-      names: [fname.value, sname.value, lname.value, fxname],
-      birthdate: dateob.value,
-      gender: gender.value,
-      marital: marital.value,
-      idnumber: idnum.value,
-      krapin: krapin.value,
-      email: email.value,
-      contacts: [
-        mobno1.value.toString(),
-        mobno2.value.toString(),
-        mobno3.value.toString(),
-      ],
-      address: [
-        county.value,
-        currtown.value,
-        subcounty.value,
-        sublocation.value,
-        physical_address.value,
-      ],
-      workstatus: [w_status, w_name, w_type, w_town, w_contact],
-      nokin: [nok_name, nok_relation, nok_town, nok_area, nok_tel],
+  const newdata = {
+    cid: cid.toString(),
+    clss: "client",
+    names: [fname.value, sname.value, lname.value, fxname],
+    birthdate: dobirth.value,
+    gender: gender.value,
+    marital: marital.value,
+    idnumber: idnum.value,
+    krapin: krapin.value,
+    email: email.value,
+    contacts: [
+      mobno1.value.toString(),
+      mobno2.value.toString(),
+      mobno3.value.toString(),
+    ],
+    address: [
+      county.value,
+      currtown.value,
+      subcounty.value,
+      sublocation.value,
+      physical_address.value,
+    ],
+    workstatus: [w_status, w_name, w_type, w_town, w_contact],
+    nokin: [nok_name, nok_relation, nok_town, nok_area, nok_tel],
 
-      images: [imageurl.value],
-      regdate: new Date().toLocaleDateString(),
-    };
-    sessionStorage.setItem("cc_newuser", JSON.stringify(newdata));
+    images: [imageurl.value],
+    regdate: new Date().toLocaleDateString(),
   };
+  sessionStorage.setItem("cc_newuser", JSON.stringify(newdata));
+}
 
 /*=====================
  Validate Email  Input
@@ -562,7 +591,7 @@ function w_statusChanged() {
     w2.innerText = "Business type";
     w3.innerText = "Business location";
     w4.innerText = "Business contact";
-    w5.style.display = 'grid';
+    w5.style.display = "grid";
   } else {
     w1.innerText = "Company name";
     w2.innerText = "Current position";
@@ -571,12 +600,12 @@ function w_statusChanged() {
     w5.style.display = "none";
   }
 }
-///w_statusChanged();
+w_statusChanged();
 
 /*============================
    Current Form Input Changes
 ------------------------------*/
-currentInputs.forEach((nput) => {
+textinputs.forEach((nput) => {
   nput.addEventListener("input", (e) => {
     newuserdata("");
   });
@@ -594,7 +623,6 @@ currentInputs.forEach((nput) => {
     }
   });
 });
-
 
 /*========================
    Create New Client ID
@@ -614,8 +642,7 @@ const createnew_id = () => {
         newid = Number(random);
         newuserdata(newid);
         submitnewClient();
-
-      } else { 
+      } else {
         createnew_id();
       }
     } else {
@@ -640,7 +667,7 @@ const netxt_tab = (step) => {
     tabs[i].classList.remove("shown");
     if (i == current_tab) {
       //tabs[i].style.display = "grid";
-      tabs[i].classList.add('shown');
+      tabs[i].classList.add("shown");
     }
   }
   let x = document.querySelectorAll(".submit .btn");
@@ -655,7 +682,6 @@ const netxt_tab = (step) => {
 };
 netxt_tab(0);
 
-
 /*=====================
   Validate Empty Inputs
 -----------------------*/
@@ -663,16 +689,17 @@ function validateEmpties() {
   let valid = true;
   let td = current_form.querySelectorAll("form td");
   let x = td[current_tab].querySelectorAll(".nput");
-  dates_inputs.forEach((input) => {
+
+  dateinputs.forEach((input) => {
     if (input.classList.contains("invalid")) {
-      dateob.classList.add("invalid");
+      dobirth.classList.add("invalid");
     } else {
-      dateob.classList.remove("invalid");
+      dobirth.classList.remove("invalid");
     }
   });
 
   for (let i = 0; i < x.length; i++) {
-    if (x[i].id !== "mobnumber3") {
+    if (x[i].id !== "phonenum3") {
       if (x[i].value == "" || x[i].classList.contains("invalid")) {
         x[i].classList.add("invalid");
         valid = false;
@@ -693,22 +720,24 @@ function validateEmpties() {
 -----------------------*/
 function submitnewClient() {
   let data = JSON.parse(sessionStorage.getItem("cc_newuser"));
-  db.collection("cc_userdata").add(data).then((docRef) => {
-    alert("Saved successfully!");
-    document.querySelector("#modal").style.display = "none";
-    sessionStorage.removeItem("cc_newuser");
-    document.getElementById("newclient").reset();
-  }).catch((err) => {
-    if (err.code !== "") {
-      alert("Error adding document: ", err);
-    }
-  });
+  db.collection("cc_userdata")
+    .add(data)
+    .then((docRef) => {
+      alert("Saved successfully!");
+      document.querySelector("#modal").style.display = "none";
+      sessionStorage.removeItem("cc_newuser");
+      document.getElementById("newclient").reset();
+    })
+    .catch((err) => {
+      if (err.code !== "") {
+        alert("Error adding document: ", err);
+      }
+    });
 }
 
 let forms = document.querySelectorAll(".forms form");
 
 function open_forms(fm) {
-
   //current_form = document.getElementById(fm);
   for (let i = 0; i < forms.length; i++) {
     forms[i].classList.remove("shown");
@@ -721,9 +750,9 @@ function open_forms(fm) {
       } else {
         current_form.classList.remove("shown");
       }
-    }else {
+    } else {
       forms[i].classList.remove("shown");
     }
   }
 }
-        netxt_tab(1);
+open_forms("newclient");
