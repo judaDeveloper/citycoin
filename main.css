@@ -264,7 +264,7 @@ body {
   }
 }
 
-.lbl.txt b {
+.lbl.txt.b {
   height: fit-content;
   .nput {
     height: 80px;
@@ -334,14 +334,6 @@ body {
   }
 }
 
-.lbl.dob input[type="text"] {
-  position: absolute;
-  width: 100px;
-  height: 25px;
-  
-  color: #c5ced6;
-  background-color: #008cff;
-}
 
 .lbl.docs {
   height: 100px;
@@ -498,8 +490,8 @@ form:has(.nput#imageurl.invalid) {
   &.cbox,
   &.dob {
     .nput {
-      font-size: 13px;
-      color: #ff3d3d;
+      font-size: 0px;
+      color: #ffffff00;
     }
   }
 }
