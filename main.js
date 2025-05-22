@@ -62,22 +62,6 @@ db.collection("cc_userdata").where("cid", "!=", '')
 };fetchusers();
 
 
-/* ==========
-FETCH LOANS
-=============*/
-
-const fetchloans = () => {
-    let ob_j = {};
-    db.collection("cc_loans").where("lid", "!=", '').onSnapshot({ includeMetadataChanges: true }, (snapshot) => {
-    snapshot.docChanges().forEach((change) => {
-        ob_j[change.doc.id] = change.doc.data();
-        appdata.loans = Object.values(ob_j);
-    });
-});
-};fetchloans();
-
-
-
 /*===================
   Client Form Inputs
 ---------------------*/
@@ -702,7 +686,7 @@ function validateEmpties() {
   });
 
   for (let i = 0; i < x.length; i++) {
-    if (x[i].id !== "phonenum1" || x[i].id !== "phonenum2") {
+    if (x[i].id !== "phonenum3") {
       if (x[i].value == "" || x[i].classList.contains("invalid")) {
         x[i].classList.add("invalid");
         valid = false;
@@ -727,7 +711,7 @@ function submitnewClient() {
     .add(data)
     .then((docRef) => {
       alert("Saved successfully!");
-      document.querySelector("#modal").style.display = "none";
+      document.querySelector(".modal").style.display = "none";
       sessionStorage.removeItem("cc_newuser");
       document.getElementById("newclient").reset();
     })
@@ -746,9 +730,12 @@ current_form = document.getElementById(fm);
     if (forms[i].id == fm) {
       current_form = forms[i];
       let disp = current_form.style.display;
+
       if (disp == "" || disp == "none") {
         current_form.classList.add("shown");
+        current_form.reset();
         netxt_tab(0);
+
       } else {
         current_form.classList.remove("shown");
       }
@@ -758,3 +745,13 @@ current_form = document.getElementById(fm);
   }
 }
 open_forms('newclient');
+
+
+
+
+
+
+
+
+
+
