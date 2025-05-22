@@ -62,6 +62,8 @@ db.collection("cc_userdata").where("cid", "!=", '')
 };fetchusers();
 
 
+
+
 /*===================
   Client Form Inputs
 ---------------------*/
@@ -103,7 +105,7 @@ let current_tab = 0;  // Current Tab
 //let current_form = document.createElement("form"); // Current Form
 let current_form = document.getElementById("newclient"); // Current Form
 
-let textinputs = current_form.querySelectorAll(".lbl.txt .nput");   //selects all text Inputs
+let allinputs = current_form.querySelectorAll(".lbl .nput");   //selects all text Inputs
 let dropdowninputs = current_form.querySelectorAll(".lbl.drod .nput");  //selects all dropdown Inputs
 let checkboxes = current_form.querySelectorAll(".lbl.cbox .nput");  //selects all checkbox Inputs
 let current_input = document.createElement("input");
@@ -171,7 +173,6 @@ function validatenumber(evt) {
 
 /*====================
 	CheckBox Function
-  validateEmpties()
 ----------------------*/
 function onecheckBox(cbox) {
   let id = cbox.id;
@@ -239,9 +240,9 @@ const getListdata = (list) => {
   } else if (list == "years") {
     x = getYears(new Date().getUTCFullYear());
   } else if (list == "counties") {
-    x = ["Mombasa", "Kilifi", "Kwale", "Taita Taveta", "Tana River", "Nairobi"];
+    x = ["Mombasa", "Kilifi", "Kwale", "Taita Taveta", "Eldoret", "Nairobi", "Kisumu", "Siaya"];
   } else if (list == "towns" || list == "w_towns" || list == "nok_towns") {
-    x = ["Mombasa", "Kilifi", "Kwale", "Taita Taveta", "Tana River", "Nairobi"];
+    x = ["Mombasa", "Kilifi", "Kwale", "Ukunda","Wundanyi", "Voi", "Kisumu", "Nairobi", "Nakuru"];
   } else if (list == "subcounties") {
     x = ["Changamwe", "Kisauni", "Bamburi", "Likoni", "Mvita", "Jomvu"];
   } else if (list == "sublocations") {
@@ -268,6 +269,19 @@ const getListdata = (list) => {
       "Debt clearance",
       "Education expenses",
     ];
+
+  } else if (list == "relations") {
+    x = [
+      "Mother",
+      "Father",
+      "Sister",
+      "Brother",
+      "Spouse",
+      "Son",
+      "Daughter",
+      "Ancle",
+      "Other relative",
+    ];
   } else if (list == "periods") {
     x = [1, 2, 3, 4, 5, 6];
   } else if (list == "clients") {
@@ -281,7 +295,7 @@ const getListdata = (list) => {
  Dropdown Static Data
 ----------------------*/
 let staticInputs = document.querySelectorAll(
-  "#county, #town, #subcounty, #sublocation, #w_type, #w_town, #nok_town"
+  "#county, #town, #subcounty, #sublocation, #w_type, #w_town, #nok_town, #nok_relation"
 );
 staticInputs.forEach((input) => {
   if (input.name !== "") {
@@ -347,7 +361,7 @@ function showHide(disp) {
   }
 }
 
-dropdowninputs.forEach((input) => {  // show dropdown lists
+allinputs.forEach((input) => {  // show dropdown lists
   input.addEventListener("click", function () {
     current_input = this;
     if (this.name) {
@@ -538,7 +552,6 @@ function newuserdata(cid) {
     ],
     workstatus: [w_status, w_name, w_type, w_town, w_contact],
     nokin: [nok_name, nok_relation, nok_town, nok_area, nok_tel],
-
     images: [imageurl.value],
     regdate: new Date().toLocaleDateString(),
   };
@@ -588,7 +601,7 @@ email.addEventListener("blur", () => {
 /*============================
    Current Form Input Changes
 ------------------------------*/
-textinputs.forEach((nput) => {
+allinputs.forEach((nput) => {
   nput.addEventListener("input", (e) => {
     newuserdata("");
   });
@@ -657,6 +670,7 @@ const netxt_tab = (step) => {
       tabs[i].classList.add("shown");
     }
   }
+
   let x = document.querySelectorAll(".submit .btn");
   if (current_tab > 0) {
     x[0].classList.add("shown");
@@ -686,6 +700,7 @@ function validateEmpties() {
   });
 
   for (let i = 0; i < x.length; i++) {
+
     if (x[i].id !== "phonenum3") {
       if (x[i].value == "" || x[i].classList.contains("invalid")) {
         x[i].classList.add("invalid");
@@ -711,7 +726,7 @@ function submitnewClient() {
     .add(data)
     .then((docRef) => {
       alert("Saved successfully!");
-      document.querySelector(".modal").style.display = "none";
+      document.querySelector("#modal").style.display = "none";
       sessionStorage.removeItem("cc_newuser");
       document.getElementById("newclient").reset();
     })
@@ -724,26 +739,19 @@ function submitnewClient() {
 let forms = document.querySelectorAll(".forms form");
 
 function open_forms(fm) {
-current_form = document.getElementById(fm);
   for (let i = 0; i < forms.length; i++) {
     forms[i].classList.remove("shown");
     if (forms[i].id == fm) {
       current_form = forms[i];
-      let disp = current_form.style.display;
-
-      if (disp == "" || disp == "none") {
-        current_form.classList.add("shown");
-        current_form.reset();
-        netxt_tab(0);
-
-      } else {
-        current_form.classList.remove("shown");
-      }
+      current_form.classList.add("shown");
+      current_form.reset();
+      netxt_tab(0);
     } else {
       forms[i].classList.remove("shown");
     }
   }
 }
+
 open_forms('newclient');
 
 
