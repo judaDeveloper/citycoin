@@ -77,6 +77,7 @@ const fetchloans = () => {
 };fetchloans();
 
 
+
 /*===================
   Client Form Inputs
 ---------------------*/
@@ -373,7 +374,7 @@ dropdowninputs.forEach((input) => {  // show dropdown lists
   });
 });
 
-
+/*
 /*===============================
  Close dropLists on window click
 --------------------------------*/
@@ -419,7 +420,7 @@ function fetchdates(dx, mx, yx) {
     months.value = monthlist[m];
     years.value = y;
   }
-} //fetchdates(days, months, years);
+}; fetchdates(days, months, years);
 
 /*====================
  Dates Inputs Clicked
@@ -523,13 +524,12 @@ const imageurlChanged = (input) => {
 };
 imageurlChanged(imageurl);
 
+
 /*=====================
   Fetch Form Data
 -----------------------*/
 function newuserdata(cid) {
   let fxname = setfullname().toLowerCase();
-  //fxnames.innerText = fxname.replace(/\b\w/g, (s) => s.toUpperCase());
-
   const newdata = {
     cid: cid.toString(),
     clss: "client",
@@ -561,20 +561,6 @@ function newuserdata(cid) {
   sessionStorage.setItem("cc_newuser", JSON.stringify(newdata));
 }
 
-/*=====================
- Validate Email  Input
------------------------*/
-email.addEventListener("blur", () => {
-  if (email.value !== "") {
-    const emailRegex =
-      /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-    if (email.value.match(emailRegex)) {
-      email.className = "nput";
-      return;
-    }
-    email.className = "nput invalid";
-  }
-});
 
 /*============================
    Work Status Changed
@@ -602,6 +588,19 @@ function w_statusChanged() {
 }
 w_statusChanged();
 
+
+email.addEventListener("blur", () => {
+  if (email.value !== "") {
+    const emailRegex =
+      /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+    if (email.value.match(emailRegex)) {
+      email.classList.remove("invalid");
+      return;
+    }
+    email.classList.add("invalid");
+  }
+});
+
 /*============================
    Current Form Input Changes
 ------------------------------*/
@@ -610,19 +609,23 @@ textinputs.forEach((nput) => {
     newuserdata("");
   });
 
-  nput.addEventListener("change", (e) => {
-    w_statusChanged();
-  });
-
   nput.addEventListener("blur", function () {
     let txt = nput.value;
     if (nput.type == "email") {
       nput.value = txt.toLowerCase();
+      
     } else {
       nput.value = txt.toLowerCase().replace(/\b\w/g, (s) => s.toUpperCase());
     }
+
+    nput.addEventListener("change", (e) => {
+      w_statusChanged();
+    });
+
   });
 });
+
+
 
 /*========================
    Create New Client ID
@@ -699,7 +702,7 @@ function validateEmpties() {
   });
 
   for (let i = 0; i < x.length; i++) {
-    if (x[i].id !== "phonenum3") {
+    if (x[i].id !== "phonenum1" || x[i].id !== "phonenum2") {
       if (x[i].value == "" || x[i].classList.contains("invalid")) {
         x[i].classList.add("invalid");
         valid = false;
@@ -708,13 +711,13 @@ function validateEmpties() {
   }
   if (valid) {
     if (current_tab == 5) {
-      //createnew_id();
+      createnew_id();
     } else {
       netxt_tab(1);
     }
   }
 }
-
+/*
 /*=====================
   Submit and Save Client
 -----------------------*/
@@ -734,11 +737,10 @@ function submitnewClient() {
       }
     });
 }
-
 let forms = document.querySelectorAll(".forms form");
 
 function open_forms(fm) {
-  //current_form = document.getElementById(fm);
+current_form = document.getElementById(fm);
   for (let i = 0; i < forms.length; i++) {
     forms[i].classList.remove("shown");
     if (forms[i].id == fm) {
@@ -755,4 +757,4 @@ function open_forms(fm) {
     }
   }
 }
-open_forms("newclient");
+open_forms('newclient');
