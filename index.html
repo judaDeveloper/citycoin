@@ -6,50 +6,7 @@
 
             <style>
       
-@-moz-keyframes growdown {
-  0% {
-    transform: scaleY(0);
-  }
-  80% {
-    transform: scaleY(1.1);
-  }
-  100% {
-    transform: scaleY(1);
-  }
-}
-@-webkit-keyframes growdown {
-  0% {
-    transform: scaleY(0);
-  }
-  80% {
-    transform: scaleY(1.1);
-  }
-  100% {
-    transform: scaleY(1);
-  }
-}
-@-o-keyframes growdown {
-  0% {
-    transform: scaleY(0);
-  }
-  80% {
-    transform: scaleY(1.1);
-  }
-  100% {
-    transform: scaleY(1);
-  }
-}
-@keyframes growdown {
-  0% {
-    transform: scaleY(0);
-  }
-  80% {
-    transform: scaleY(1.1);
-  }
-  100% {
-    transform: scaleY(1);
-  }
-}
+
 * {
   margin: 0;
   padding: 0;
@@ -141,12 +98,11 @@ body {
   position: absolute;
   grid-template-rows: 1fr;
   padding: 3px 5px 5px 5px;
-  display: none;
 }
 .md {
   width: 100%;
   padding: 80px 5px;
-  background-color: #2766b8;
+  background-color: #4a98ff;
 }
 .forms {
   width: 100%;
@@ -158,6 +114,12 @@ body {
   background-color: #ececec;
   grid-template-rows: 30px minmax(400px, 1fr) 70px;
   display: none;
+}
+.forms:has(form.shown) {
+  display: grid;
+}
+form.shown {
+  display: grid;
 }
 
 .heada {
@@ -224,16 +186,6 @@ td .tabname {
 
 td.shown {
   display: grid;
-}
-
-.modal:has(form.shown) {
-  display: grid;
-  .forms {
-    display: grid;
-    form.shown {
-      display: grid;
-    }
-  }
 }
 
 .lbl {
