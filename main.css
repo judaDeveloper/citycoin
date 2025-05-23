@@ -179,6 +179,7 @@ td.shown {
   display: grid;
 }
 
+
 .lbl {
   width: 100%;
   height: 50px;
@@ -251,20 +252,20 @@ td.shown {
 }
 .lbl.cbox, .lbl.dob {
   grid-template-columns: 50px 1fr;
-  
-  input[type="button"] {
-    height: 25px;
-    cursor: pointer;
-    margin-top: 15px;
-    border-radius: 2px;
-    background-color: #f3f3f39f;
-
-    &:hover {
-      color: #008cff;
-      font-weight: bold;
-    }
-  }
 }
+.lbl.cbox input[type="button"], 
+.lbl.dob input[type="button"] {
+  height: 25px;
+  cursor: pointer;
+  margin-top: 15px;
+  border-radius: 2px;
+  background-color: #f3f3f39f;
+}
+.lbl.cbox:hover, .lbl.dob:hover {
+  color: #008cff;
+  font-weight: bold;
+}
+
 .lbl.cbox span, .lbl.dob span {
   top: 0px;
   left: 65px;
@@ -309,43 +310,39 @@ td.shown {
   font-weight: bold;
 }
 
-
 .lbl.docs {
   height: 100px;
   padding: 0px 0px;
   grid-template-columns: 1fr;
   background-color: #ffffff42;
   box-shadow: none;
+}
+.docs div {
+  display: grid;
+  column-gap: 5%;
+  grid-template-columns: 1fr 1fr 1fr;
+}
+.docs div label {
+  display: grid;
+  cursor: pointer;
+  border-radius: 3px;
+  text-align: center;
+  grid-template-rows: 1fr 18px;
+  background-color: #ffffff;
+  box-shadow: rgba(0, 0, 0, 0.1) 0px 0px 5px 0px,
+    rgba(0, 0, 0, 0.1) 0px 0px 1px 0px;
+}
 
-  div {
-    display: grid;
-    column-gap: 5%;
-    grid-template-columns: 1fr 1fr 1fr;
-
-    label {
-      display: grid;
-      cursor: pointer;
-      border-radius: 3px;
-      text-align: center;
-      grid-template-rows: 1fr 18px;
-      background-color: #ffffff;
-      box-shadow: rgba(0, 0, 0, 0.1) 0px 0px 5px 0px,
-        rgba(0, 0, 0, 0.1) 0px 0px 1px 0px;
-
-      span {
-        font-size: 12px;
-        font-weight: 400;
-        background-color: #cfcece3d;
-      }
-
-      input[type="file"] {
-        width: 0px;
-        height: 0px;
-        padding: 0;
-        border: none;
-      }
-    }
-  }
+.docs div label span {
+  font-size: 12px;
+  font-weight: 400;
+  background-color: #cfcece3d;
+}
+.docs div label input[type="file"] {
+  width: 0px;
+  height: 0px;
+  padding: 0;
+  border: none;
 }
 
 .lbl .dropdwn {
@@ -362,113 +359,96 @@ td.shown {
   width: calc(100% - 65px);
   background-color: #fdfdfd;
   border: 1px solid #b8b8b842;
-  box-shadow: 0 26px 58px 0 #00000038, 0 5px 14px 0 #0000002e;
 
-  li {
-    width: 100%;
-    height: 40px;
-    cursor: pointer;
-    font-size: 15px;
-    color: #1a1a1a;
-    border-radius: 4px;
-    background-color: #ffffff;
-
-    p {
-      height: 40px;
-      display: grid;
-      text-align: center;
-      align-items: center;
-      padding: 5px 10px;
-      border-bottom: 1px solid #eeeeee;
-    }
-
-    &:hover {
-      color: #ffffff;
-      font-weight: bold;
-      background-color: #008cff;
-    }
-  }
-}
-.lbl .dropdwn {
-  animation: growdown 200ms ease-in-out forwards;
   transform-origin: top center;
+  animation: growdown 200ms ease-in-out forwards;
+  box-shadow: 0 26px 58px 0 #00000038, 0 5px 14px 0 #0000002e;
 }
 
-.lbl:has(.nput.invalid) {
-  .con {
-    svg {
-      fill: #f86464;
-    }
-  }
-  .pod {
-    color: #f86464;
-  }
-  .nput {
-    border: 1px solid #ff686885;
-  }
-
-  &.cbox,
-  &.dob {
-    span {
-      color: #f86464;
-    }
-  }
+.lbl .dropdwn li {
+  width: 100%;
+  height: 40px;
+  cursor: pointer;
+  font-size: 15px;
+  color: #1a1a1a;
+  border-radius: 4px;
+  background-color: #ffffff;
+}
+.lbl .dropdwn li p {
+  height: 40px;
+  display: grid;
+  text-align: center;
+  align-items: center;
+  padding: 5px 10px;
+  border-bottom: 1px solid #eeeeee;
 }
 
-.lbl:focus-within {
-  .con {
-    background-color: #0099ff;
-    svg {
-      fill: #ffffff;
-    }
-  }
-  .pod {
-    color: #006cc4;
-    transform: translate3d(0, -8px, 0) scale(0.78);
-  }
-  .nput:focus {
-    background-color: #ffffff;
-    border: 1px solid #008cffa6;
-
-    &.invalid {
-      border: 1px solid #ffacaca6;
-    }
-  }
+.lbl .dropdwn li:hover {
+  color: #ffffff;
+  font-weight: bold;
+  background-color: #008cff;
 }
 
-form:has(.nput#imageurl.invalid) {
-  label.imge {
-    border: 1px solid #ff686869;
-    img {
-      background-color: #ff9f9f;
-    }
-  }
+.lbl:has(.nput.invalid) .con svg {
+  fill: #f86464;
 }
-.lbl:has(.nput:not(.nput:placeholder-shown)):not(:focus-within) {
-  .con {
-    background-color: #01a2ff17;
-    svg {
-      fill: #0099ff;
-    }
-  }
-  .pod {
-    color: #757575;
-    transform: translate3d(0, -8px, 0) scale(0.78);
-  }
-  .nput {
-    font-size: 14px;
-    color: #000000;
-    font-weight: bold;
-    border: 1px solid #008cff44;
-  }
+.lbl:has(.nput.invalid) .pod {
+  color: #f86464;
+}
+.lbl:has(.nput.invalid) .nput {
+  border: 1px solid #ff686885;
+}
+.cbox:has(.nput.invalid) span, .dob:has(.nput.invalid) span {
+  color: #f86464;
+}
 
-  &.cbox,
-  &.dob {
-    .nput {
-      font-size: 0px;
-      color: #ffffff00;
-    }
-  }
+.lbl:focus-within .con {
+  background-color: #0099ff;
+}
+.lbl:focus-within .con svg {
+  fill: #ffffff;
+}
+.lbl:focus-within .pod {
+  color: #006cc4;
+  transform: translate3d(0, -8px, 0) scale(0.78);
+}
+.lbl:focus-within .nput:focus {
+  background-color: #ffffff;
+  border: 1px solid #008cffa6;
+}
+.lbl:focus-within .nput:focus.invalid {
+  border: 1px solid #ffacaca6;
+}
+form:has(.nput#imageurl.invalid) label.imge {
+  border: 1px solid #ff686869;
+}
+form:has(.nput#imageurl.invalid) label.imge img {
+  background-color: #ff9f9f;
+}
+
+.lbl:has(.nput:not(.nput:placeholder-shown)):not(:focus-within) .con {
+  background-color: #01a2ff17;
+}
+.lbl:has(.nput:not(.nput:placeholder-shown)):not(:focus-within) .con svg {
+  fill: #0099ff;
+}
+.lbl:has(.nput:not(.nput:placeholder-shown)):not(:focus-within).pod {
+  color: #757575;
+  transform: translate3d(0, -8px, 0) scale(0.78);
+}
+.lbl:has(.nput:not(.nput:placeholder-shown)):not(:focus-within) .nput {
+  font-size: 14px;
+  color: #000000;
+  font-weight: bold;
+  border: 1px solid #008cff44;
+}
+.cbox:has(.nput:not(.nput:placeholder-shown)):not(:focus-within) .nput {
+  font-size: 0px;
+  color: #ffffff00;
+}
+.dob:has(.nput:not(.nput:placeholder-shown)):not(:focus-within) .nput {
+  font-size: 0px;
+  color: #ffffff00;
 }
 
 label.imge {
@@ -489,10 +469,11 @@ label.imge {
 label.imge:hover {
   background-color: #fcfcfcd0;
   border: 1px solid #008cff8e;
-  img#imgpreview {
-    scale: 110%;
-  }
 }
+label.imge:hover img#imgpreview {
+  scale: 110%;
+}
+
 label.imge p {
   top: -45px;
   left: -50%;
@@ -528,39 +509,29 @@ label.imge input {
   height: 0;
   position: absolute;
 }
-
-
-.lbl.cbox {
-  .box {
-    grid-template-columns: minmax(25px, 35%) 1fr;
-    label:has(input[type="checkbox"]:checked) {
-      font-size: 14px;
-      color: #000000;
-      font-weight: bold;
-    }
-  }
-  &:has(#w_status) {
-    .box {
-      grid-template-columns: minmax(25px, 40%) 1fr;
-    }
-  }
+.lbl.cbox .box {
+  grid-template-columns: minmax(25px, 35%) 1fr;
+}
+.lbl.cbox .box label:has(input[type="checkbox"]:checked) {
+  font-size: 14px;
+  color: #000000;
+  font-weight: bold;
+}
+.lbl.cbox:has(#w_status) .box {
+  grid-template-columns: minmax(25px, 40%) 1fr;
 }
 
-.lbl.dob {
-  .box {
-    grid-template-columns: minmax(25px, 25%) minmax(25px, 25%) minmax(25px, 25%);
-    input[type="button"] {
-      &:nth-child(1):not(&[value="DD"]),
-      &:nth-child(2):not(&[value="MM"]),
-      &:nth-child(3):not(&[value="YY"]) {
-        font-size: 14px;
-        color: #000000;
-        font-weight: bold;
-      }
-    }
-  }
+.lbl.dob .box {
+  grid-template-columns: minmax(25px, 25%) minmax(25px, 25%) minmax(25px, 25%);
 }
 
+.lbl.dob .box .ndob:nth-child(1):not(.ndob:nth-child(1)[value="DD"]),
+.lbl.dob .box .ndob:nth-child(2):not(.ndob:nth-child(2)[value="MM"]),
+.lbl.dob .box .ndob:nth-child(3):not(.ndob:nth-child(3)[value="YY"]) {
+  font-size: 14px;
+  color: #000000;
+  font-weight: bold;
+}
 
 .submit {
   display: grid;
