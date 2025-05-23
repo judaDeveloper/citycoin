@@ -18,10 +18,10 @@
     </head>
     <body>
         <div id="Main">
-            <div class="modal">
+                  <div class="modal">
         <div class="md">
           <div class="successfull">
-            <img src="https://judadeveloper.github.io/registration/logo.png" alt="" />
+            <img src="assets/imgs/logo.png" alt="" />
             <p>Saved succesfully</p>
             <p>Your details have been submitted for registration process. You will be contacted as soon as possible.</p>
           </div>
@@ -48,7 +48,7 @@
                   accept=".png, .jpg, .jpeg"
                   required
                   oninput="this.className = ''"
-                  onchange="resizeimage()"
+                  onchange="resizeimage('inputimage', 'imageurl')"
                 />
                 <img src="" alt="" id="imgpreview" />
               </label>
@@ -245,10 +245,10 @@
                   <input
                     id="imageurl"
                     type="text"
-                    class="nput"
+                    class="nput url"
                     placeholder=""
                     oninput="this.className='nput'"
-                    onchange="imageurlChanged(this)"
+                    onchange="imageurlChanged(this, 'imgpreview')"
                   />
                 </td>
 
@@ -779,36 +779,66 @@
 
                   <label class="lbl docs" for="">
                     <div>
-                      <label for="doc1">
+                      <label class="imge" for="inputimage1">
                         <input
-                          class="Vnput"
                           type="file"
-                          id="doc1"
-                          placeholder=""
-                          oninput="this.className='Vnput'"
+                          id="inputimage1"
+                          accept=".png, .jpg, .jpeg"
+                          required
+                          oninput="this.className = ''"
+                          onchange="resizeimage('inputimage1', 'imageurl1')"
                         />
-                        <span>ID front</span>
+                        <img src="" alt="" id="imgpreview1" />
                       </label>
-                      <label for="doc2">
+                      
+                      <label class="imge" for="inputimage2">
                         <input
-                          class="Vnput"
                           type="file"
-                          id="doc2"
-                          placeholder=""
-                          oninput="this.className='Vnput'"
+                          id="inputimage2"
+                          accept=".png, .jpg, .jpeg"
+                          required
+                          oninput="this.className = ''"
+                          onchange="resizeimage('inputimage2', 'imageurl2')"
                         />
-                        <span>ID back</span>
+                        <img src="" alt="" id="imgpreview2" />
                       </label>
-                      <label for="doc3" class="w5">
+
+                      <label class="imge w5" for="inputimage3">
                         <input
-                          class="Vnput"
                           type="file"
-                          id="doc3"
-                          placeholder=""
-                          oninput="this.className='Vnput'"
+                          id="inputimage3"
+                          accept=".png, .jpg, .jpeg"
+                          required
+                          oninput="this.className = ''"
+                          onchange="resizeimage('inputimage3', 'imageurl3')"
                         />
-                        <span>B/P</span>
+                        <img src="" alt="" id="imgpreview3" />
                       </label>
+
+                      <input
+                      id="imageurl1"
+                      type="text"
+                      class="nput url"
+                      placeholder=""
+                      oninput="this.className='nput'"
+                      onchange="imageurlChanged(this, 'imgpreview1')" />
+
+                      <input
+                      id="imageurl2"
+                      type="text"
+                      class="nput url"
+                      placeholder=""
+                      oninput="this.className='nput'"
+                      onchange="imageurlChanged(this, 'imgpreview2')"/>
+  
+                      <input
+                      id="imageurl3"
+                      type="text"
+                      class="nput url"
+                      placeholder=""
+                      oninput="this.className='nput'"
+                      onchange="imageurlChanged(this, 'imgpreview3')"/>
+
                     </div>
                   </label>
                 </td>
@@ -821,8 +851,7 @@
             </div>
           </div>
         </div>
-      </div>
-                  
+      </div>     
         </div>
 
     </script>
