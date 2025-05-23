@@ -139,11 +139,9 @@ body {
   background-repeat: no-repeat;
   grid-template-columns: minmax(320px, 1fr);
   background-color: hwb(207 34% 8%);
-  background-image: url(/assets/imgs/banner-2.png);
+  background-image: url("https://judadeveloper.github.io/registration/banner-2.png");
   grid-template-rows: 30px minmax(400px, 1fr) 70px;
-
   box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
-
   display: none;
 }
 .forms:has(form.shown) {
@@ -545,7 +543,7 @@ label.imge img[src=""] {
   min-height: 50px;
   border-radius: 100%;
   background-color: #24a8ff;
-  content: url("/assets/svg/user2.svg");
+  content: url("https://judadeveloper.github.io/registration/user2.svg");
 }
 label.imge input {
   width: 0;
