@@ -62,7 +62,6 @@ db.collection("cc_userdata").where("cid", "!=", '')
 };fetchusers();
 
 
-
 /*===================
   Client Form Inputs
 ---------------------*/
@@ -98,6 +97,11 @@ let nok_relation = document.getElementById("nok_relation");
 let nok_town = document.getElementById("nok_town");
 let nok_area = document.getElementById("w_town");
 let nok_tel = document.getElementById("nok_contact");
+
+let imageurl1 = document.getElementById("imageurl1");
+let imageurl2 = document.getElementById("imageurl2");
+let imageurl3 = document.getElementById("imageurl3");
+
 
 
 let current_tab = 0;  // Current Tab 
@@ -478,8 +482,10 @@ const setfullname = () => {
 /*=====================
   Image File Input
 -----------------------*/
-const resizeimage = () => {
-  let mg = document.getElementById("inputimage").files[0];
+const resizeimage = (inputfile, myurl) => {
+  let mg = document.getElementById(inputfile).files[0];
+  let inputurl = document.getElementById(myurl);
+
   let reader = new FileReader();
   reader.readAsDataURL(mg);
   reader.name = mg.name;
@@ -508,18 +514,23 @@ const resizeimage = () => {
       let cx = x.getContext("2d");
       cx.drawImage(el.target, 0, 0, x.width, x.height);
       let srcEncoded = cx.canvas.toDataURL("image/png", 1);
-      imageurl.value = srcEncoded;
-      imageurl.dispatchEvent(new Event("input"));
-      imageurl.dispatchEvent(new Event("change"));
+
+      inputurl.value = srcEncoded;
+      inputurl.dispatchEvent(new Event("input"));
+      inputurl.dispatchEvent(new Event("change"));
     };
   };
 };
-const imageurlChanged = (input) => {
+const imageurlChanged = (input, preview) => {
   if (input.value) {
-    document.getElementById("imgpreview").src = input.value;
+    document.getElementById(preview).src = input.value;
   }
 };
-imageurlChanged(imageurl);
+
+imageurlChanged(imageurl, '');
+imageurlChanged(imageurl1, "");
+imageurlChanged(imageurl2, "");
+imageurlChanged(imageurl3, "");
 
 
 /*=====================
@@ -530,12 +541,7 @@ function newuserdata(cid) {
   const newdata = {
     clss: "client",
     cid: cid.toString(),
-    names: [
-      firstname.value, 
-      secondname.value, 
-      lastname.value, 
-      xfullname
-    ],
+    names: [firstname.value, secondname.value, lastname.value, xfullname],
     dobirth: dobirth.value,
     gender: gender.value,
     marital: marital.value,
@@ -570,6 +576,7 @@ function newuserdata(cid) {
       nok_tel.value.toString(),
     ],
     images: [imageurl.value],
+    docs: [imageurl1.value, imageurl2.value, imageurl3.value],
     regdate: new Date().toLocaleDateString(),
   };
   sessionStorage.setItem("cc_newuser", JSON.stringify(newdata));
@@ -752,7 +759,7 @@ function open_forms(fm) {
     if (forms[i].id == fm) {
       current_form = forms[i];
       current_form.classList.add("shown");
-      current_form.reset();
+      //current_form.reset();
       netxt_tab(0);
     } else {
       forms[i].classList.remove("shown");
@@ -760,7 +767,6 @@ function open_forms(fm) {
   }
 }
 open_forms('newclient');
-
 
 
 
