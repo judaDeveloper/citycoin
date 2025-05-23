@@ -582,7 +582,7 @@ let w1 = document.querySelector(".pod.wname");
 let w2 = document.querySelector(".pod.wtype");
 let w3 = document.querySelector(".pod.wtown");
 let w4 = document.querySelector(".pod.wcontact");
-let w5 = document.querySelector(".lbl.docs");
+let w5 = document.querySelector(".lbl.docs .w5");
 
 function w_statusChanged() {
   if (w_status.value == "business") {
