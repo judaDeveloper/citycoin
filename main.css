@@ -502,7 +502,7 @@ label.imge img[src=""] {
   min-height: 50px;
   border-radius: 100%;
   background-color: #24a8ff;
-  content: url("/assets/svg/user2.svg");
+  content: url("https://judadeveloper.github.io/registration/user2.svg");
 }
 label.imge input {
   width: 0;
