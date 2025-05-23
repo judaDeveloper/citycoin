@@ -35,7 +35,7 @@
                 />
               </svg>
             </div>
-            
+
             <form action="" id="newclient">
               <label class="imge" for="inputimage">
                 <input
@@ -49,7 +49,7 @@
                 <img src="" alt="" id="imgpreview" />
               </label>
               <table>
-                <td class="shown">
+                <td>
                   <p class="tabname">Basic info</p>
                   <label class="lbl txt" for="fname">
                     <p class="con">
@@ -164,22 +164,35 @@
 
                     <span> Date of birth </span>
                     <div class="box" id="mybox">
-                      <input type="button" name="dates" id="days" value="DD" />
+                      <input 
+                        class="ndob" 
+                        type="button" 
+                        name="dates" 
+                        id="days" 
+                        value="DD" />
+
                       <input
+                        class="ndob"
                         type="button"
                         name="dates"
                         id="months"
-                        value="MM"
-                      />
-                      <input type="button" name="dates" id="years" value="YY" />
+                        value="MM"/>
+
+                      <input 
+                        class="ndob" 
+                        type="button" 
+                        name="dates" 
+                        id="years" 
+                        value="YY" />
+
                       <ul class="dropdwn" id="dates"></ul>
                     </div>
                     <input
                       type="text"
                       id="dateob"
-                      class="ndob"
+                      class="nput"
                       placeholder=""
-                      oninput="this.className='ndob'"
+                      oninput="this.className='nput'"
                     />
                   </label>
 
@@ -382,7 +395,7 @@
                   </label>
                 </td>
 
-                <td class="shown">
+                <td>
                   <p class="tabname">Address</p>
                   <label class="lbl drod" for="county">
                     <p class="con">
@@ -536,12 +549,12 @@
                     <input
                       class="nput"
                       type="text"
-                      name="nok_relations"
+                      name="relations"
                       id="nok_relation"
                       placeholder=""
                       oninput="this.className='nput'"
                     />
-                    <ul class="dropdwn" id="nok_relations"></ul>
+                    <ul class="dropdwn" id="relations"></ul>
                   </label>
 
                   <label class="lbl drod" for="nok_town">
@@ -656,7 +669,7 @@
                       id="w_status"
                       class="nput"
                       placeholder=""
-                    onchange="w_statusChanged()"
+                      onchange="w_statusChanged()"
                       oninput="this.className='nput'"
                     />
                   </label>
@@ -807,7 +820,6 @@
       </div>
         </div>
 
-        
     </script>
         <script src="https://judadeveloper.github.io/registration/main.js"></script>
     </body>
