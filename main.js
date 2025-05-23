@@ -63,13 +63,12 @@ db.collection("cc_userdata").where("cid", "!=", '')
 
 
 
-
 /*===================
   Client Form Inputs
 ---------------------*/
-let fname = document.getElementById("fname");
-let sname = document.getElementById("sname");
-let lname = document.getElementById("lname");
+let firstname = document.getElementById("fname");
+let secondname = document.getElementById("sname");
+let lastname = document.getElementById("lname");
 let dobirth = document.getElementById("dateob");
 let gender = document.getElementById("genda");
 let marital = document.getElementById("marital");
@@ -468,10 +467,10 @@ dropdownlists.forEach((item) => {
 -----------------------*/
 const setfullname = () => {
   let x;
-  if (lname.value !== "") {
-    x = lname.value + " " + fname.value;
+  if (lastname.value !== "") {
+    x = lastname.value + " " + firstname.value;
   } else {
-    x = sname.value + " " + fname.value;
+    x = secondname.value + " " + firstname.value;
   }
   return x;
 };
@@ -527,17 +526,23 @@ imageurlChanged(imageurl);
   Fetch Form Data
 -----------------------*/
 function newuserdata(cid) {
-  let fxname = setfullname().toLowerCase();
+  let xfullname = setfullname().toLowerCase();
   const newdata = {
-    cid: cid.toString(),
     clss: "client",
-    names: [fname.value, sname.value, lname.value, fxname],
-    birthdate: dobirth.value,
+    cid: cid.toString(),
+    names: [
+      firstname.value, 
+      secondname.value, 
+      lastname.value, 
+      xfullname
+    ],
+    dobirth: dobirth.value,
     gender: gender.value,
     marital: marital.value,
     idnumber: idnum.value,
     krapin: krapin.value,
     email: email.value,
+
     contacts: [
       mobno1.value.toString(),
       mobno2.value.toString(),
@@ -550,14 +555,25 @@ function newuserdata(cid) {
       sublocation.value,
       physical_address.value,
     ],
-    workstatus: [w_status, w_name, w_type, w_town, w_contact],
-    nokin: [nok_name, nok_relation, nok_town, nok_area, nok_tel],
+    workstatus: [
+      w_status.value,
+      w_name.value,
+      w_type.value,
+      w_town.value,
+      w_contact.value.toString(),
+    ],
+    nokin: [
+      nok_name.value,
+      nok_relation.value,
+      nok_town.value,
+      nok_area.value,
+      nok_tel.value.toString(),
+    ],
     images: [imageurl.value],
     regdate: new Date().toLocaleDateString(),
   };
   sessionStorage.setItem("cc_newuser", JSON.stringify(newdata));
 }
-
 
 /*============================
    Work Status Changed
@@ -605,7 +621,6 @@ allinputs.forEach((nput) => {
   nput.addEventListener("input", (e) => {
     newuserdata("");
   });
-
   nput.addEventListener("blur", function () {
     let txt = nput.value;
     if (nput.type == "email") {
@@ -614,15 +629,12 @@ allinputs.forEach((nput) => {
     } else {
       nput.value = txt.toLowerCase().replace(/\b\w/g, (s) => s.toUpperCase());
     }
-
     nput.addEventListener("change", (e) => {
       w_statusChanged();
     });
 
   });
 });
-
-
 
 /*========================
    Create New Client ID
@@ -716,6 +728,7 @@ function validateEmpties() {
     }
   }
 }
+
 /*
 /*=====================
   Submit and Save Client
@@ -725,19 +738,14 @@ function submitnewClient() {
   db.collection("cc_userdata")
     .add(data)
     .then((docRef) => {
-      alert("Saved successfully!");
-      document.querySelector("#modal").style.display = "none";
+      //alert("Saved successfully!");
+      open_forms("");
+      document.querySelector(".modal").classList.add("saved");
       sessionStorage.removeItem("cc_newuser");
       document.getElementById("newclient").reset();
     })
-    .catch((err) => {
-      if (err.code !== "") {
-        alert("Error adding document: ", err);
-      }
-    });
 }
 let forms = document.querySelectorAll(".forms form");
-
 function open_forms(fm) {
   for (let i = 0; i < forms.length; i++) {
     forms[i].classList.remove("shown");
@@ -751,10 +759,7 @@ function open_forms(fm) {
     }
   }
 }
-
 open_forms('newclient');
-
-
 
 
 
