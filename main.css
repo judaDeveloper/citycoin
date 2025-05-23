@@ -139,7 +139,7 @@ body {
   background-repeat: no-repeat;
   grid-template-columns: minmax(320px, 1fr);
   background-color: hwb(207 34% 8%);
-  background-image: url("https://judadeveloper.github.io/registration/banner-2.png");
+  background-image: url(https://judadeveloper.github.io/registration/banner-2.png);
   grid-template-rows: 30px minmax(400px, 1fr) 70px;
   box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
   display: none;
