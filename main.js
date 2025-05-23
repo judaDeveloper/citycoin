@@ -766,5 +766,3 @@ open_forms('newclient');
 
 
 
-
-
