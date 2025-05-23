@@ -35,6 +35,8 @@ body {
   position: relative;
   padding: 3px 5px 5px 5px;
 }
+
+
 @-moz-keyframes growdown {
   0% {
     transform: scaleY(0);
@@ -92,8 +94,40 @@ body {
 }
 .md {
   width: 100%;
-  padding: 80px 5px;
-  background-color: #4a98ff;
+  display: grid;
+  position: relative;
+  align-content: center;
+  background-color: #ffffff;
+}
+.successfull {
+  width: 100%;
+  height: 100%;
+  display: grid;
+  z-index: 99999;
+  padding: 0px 10px 0px 10%;
+  position: absolute;
+  align-content: center;
+  justify-content: center;
+  background-color: #f1f1f1;
+  display: none;
+
+}
+.successfull img {
+  top: 10%;
+  left: 40%;
+  width: 20%;
+  position: absolute;
+}
+.successfull p {
+  font-size: 16px;
+  padding: 10px;
+}
+.successfull p:first-of-type {
+  font-size: 20px;
+  font-weight: 500;
+}
+.modal.saved .successfull {
+  display: grid;
 }
 .forms {
   width: 100%;
@@ -102,8 +136,15 @@ body {
   max-width: 500px;
   min-width: 260px;
   border-radius: 5px;
-  background-color: #ececec;
+  background-size: cover;
+  background-repeat: no-repeat;
+  grid-template-columns: minmax(320px, 1fr);
+  background-color: hwb(207 34% 8%);
+  background-image: url(/assets/imgs/banner-2.png);
   grid-template-rows: 30px minmax(400px, 1fr) 70px;
+
+  box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+
   display: none;
 }
 .forms:has(form.shown) {
@@ -124,24 +165,25 @@ form.shown {
   border-radius: 8px 8px 0px 0px;
 }
 .heada p {
-  font-size: 12px;
-  color: #000000;
+  font-size: 20px;
+  color: #ffffff;
   text-align: start;
-  font-weight: 700;
-  padding: 5px 10px;
+  font-weight: 500;
+  padding: 0px 5px;
 }
 .heada .btnclose {
-  top: 4px;
-  right: 4px;
+  top: 2px;
+  right: 2px;
   width: 25px;
   height: 25px;
-  fill: #b3b3b3;
+  fill: #ffffff;
   position: absolute;
   border-radius: 100%;
-  background-color: #ffffff;
+  background-color: #ffffff00;
   scale: 110%;
   box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1),
     0 1px 2px -1px rgba(0, 0, 0, 0.1);
+    display: none;
 }
 .btnclose:hover {
   fill: #ff0000;
@@ -426,27 +468,27 @@ form:has(.nput#imageurl.invalid) label.imge img {
   background-color: #ff9f9f;
 }
 
-.lbl:has(.nput:not(.nput:placeholder-shown)):not(:focus-within) .con {
+.lbl:not(:focus-within):has(.nput:not(:placeholder-shown)) .con {
   background-color: #01a2ff17;
 }
-.lbl:has(.nput:not(.nput:placeholder-shown)):not(:focus-within) .con svg {
+.lbl:not(:focus-within):has(.nput:not(:placeholder-shown)) .con svg {
   fill: #0099ff;
 }
-.lbl:has(.nput:not(.nput:placeholder-shown)):not(:focus-within).pod {
+.lbl:not(:focus-within):has(.nput:not(:placeholder-shown)) .pod {
   color: #757575;
   transform: translate3d(0, -8px, 0) scale(0.78);
 }
-.lbl:has(.nput:not(.nput:placeholder-shown)):not(:focus-within) .nput {
+.lbl:not(:focus-within):has(.nput:not(:placeholder-shown)) .nput {
   font-size: 14px;
   color: #000000;
   font-weight: bold;
   border: 1px solid #008cff44;
 }
-.cbox:has(.nput:not(.nput:placeholder-shown)):not(:focus-within) .nput {
+.cbox:has(.nput:not(.nput:placeholder-shown)):not(.lbl:focus-within) .nput {
   font-size: 0px;
   color: #ffffff00;
 }
-.dob:has(.nput:not(.nput:placeholder-shown)):not(:focus-within) .nput {
+.dob:has(.nput:not(.nput:placeholder-shown)):not(.lbl:focus-within) .nput {
   font-size: 0px;
   color: #ffffff00;
 }
@@ -502,7 +544,7 @@ label.imge img[src=""] {
   min-height: 50px;
   border-radius: 100%;
   background-color: #24a8ff;
-  content: url("https://judadeveloper.github.io/registration/user2.svg");
+  content: url("/assets/svg/user2.svg");
 }
 label.imge input {
   width: 0;
@@ -539,7 +581,7 @@ label.imge input {
   min-width: 300px;
   padding: 13px 20px;
   justify-content: center;
-  background-color: #d1d1d1;
+  background-color: #fdfdfdd3;
   border-radius: 0px 0px 3px 3px;
   grid-template-columns: minmax(80px, 25%) minmax(140px, 25%);
 }
